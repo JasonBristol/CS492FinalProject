@@ -2,7 +2,7 @@ CS492FinalProject
 =================
 A Host-based IDS in Java, specifically focused on anomaly detection.
 
-Project uses Jpcap to capture packets, and features researched anomaly algorithms to detect anomalies in real-time.
+Project uses <a href="http://jnetpcap.com/">Jnetpcap</a> to capture packets, and features researched anomaly algorithms to detect anomalies in real-time.
 
 <b>Possible Features:</b>
 <ul>
