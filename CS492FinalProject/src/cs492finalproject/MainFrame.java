@@ -3,14 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package cs492finalproject;
+
+import cs492finalproject.Utils.BoundsPopupMenuListener;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.swing.SpinnerNumberModel;
+
+import org.jnetpcap.Pcap;
+import org.jnetpcap.PcapIf;
+import org.jnetpcap.packet.PcapPacket;
+import org.jnetpcap.packet.PcapPacketHandler;
 
 /**
  *
  * @author Jason
  */
 public class MainFrame extends javax.swing.JFrame {
+
+    List<PcapIf> alldevs = new ArrayList<PcapIf>(); // Will be filled with NICs  
+    StringBuilder errbuf = new StringBuilder(); // For any error msgs
+    Pcap pcap;
 
     /**
      * Creates new form MainFrame
@@ -30,10 +44,19 @@ public class MainFrame extends javax.swing.JFrame {
 
         tbStatusBar = new javax.swing.JToolBar();
         lblStatus = new javax.swing.JLabel();
-        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(540, 0), new java.awt.Dimension(32767, 0));
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(545, 0), new java.awt.Dimension(32767, 0));
         pbarProgress = new javax.swing.JProgressBar();
+        tabpaneMain = new javax.swing.JTabbedPane();
         panelMain = new javax.swing.JPanel();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        lblDevice = new javax.swing.JLabel();
+        cboxDevice = new javax.swing.JComboBox();
+        btnScan = new javax.swing.JButton();
+        lblPacketNumber = new javax.swing.JLabel();
+        spinPacketNumber = new javax.swing.JSpinner();
+        tbtnCapture = new javax.swing.JToggleButton();
+        spLog = new javax.swing.JScrollPane();
+        txtaLog = new javax.swing.JTextArea();
+        mbarMain = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         menuItemExit = new javax.swing.JMenuItem();
         menuEdit = new javax.swing.JMenu();
@@ -53,18 +76,88 @@ public class MainFrame extends javax.swing.JFrame {
         tbStatusBar.add(filler2);
 
         pbarProgress.setBorderPainted(false);
+        pbarProgress.setDoubleBuffered(true);
         tbStatusBar.add(pbarProgress);
+
+        lblDevice.setText("Hardware Device:");
+
+        BoundsPopupMenuListener listener = new BoundsPopupMenuListener(true, false);
+
+        cboxDevice.addPopupMenuListener (listener );
+        cboxDevice.setPrototypeDisplayValue ("ItemWWW");
+
+        btnScan.setText("Scan for Devices");
+        btnScan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnScanActionPerformed(evt);
+            }
+        });
+
+        lblPacketNumber.setText("# of Packets (0 for infinity):");
+
+        spinPacketNumber.setEditor(new javax.swing.JSpinner.NumberEditor(spinPacketNumber, ""));
+        spinPacketNumber.setModel(new SpinnerNumberModel(0, 0, 1000, 1));
+
+        tbtnCapture.setText("Toggle Packet Capture");
+        tbtnCapture.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tbtnCaptureActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelMainLayout = new javax.swing.GroupLayout(panelMain);
         panelMain.setLayout(panelMainLayout);
         panelMainLayout.setHorizontalGroup(
             panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(panelMainLayout.createSequentialGroup()
+                .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMainLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(tbtnCapture, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelMainLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelMainLayout.createSequentialGroup()
+                                .addComponent(lblDevice)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cboxDevice, 0, 317, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnScan))
+                            .addGroup(panelMainLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(lblPacketNumber)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spinPacketNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap())
         );
         panelMainLayout.setVerticalGroup(
             panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 333, Short.MAX_VALUE)
+            .addGroup(panelMainLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cboxDevice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDevice)
+                    .addComponent(btnScan))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(spinPacketNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPacketNumber))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tbtnCapture, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
+
+        tabpaneMain.addTab("Packet Capturing", panelMain);
+
+        txtaLog.setEditable(false);
+        txtaLog.setBackground(new java.awt.Color(204, 204, 255));
+        txtaLog.setColumns(20);
+        txtaLog.setForeground(new java.awt.Color(51, 51, 51));
+        txtaLog.setLineWrap(true);
+        txtaLog.setRows(5);
+        txtaLog.setDoubleBuffered(true);
+        txtaLog.setSelectionColor(new java.awt.Color(0, 153, 102));
+        spLog.setViewportView(txtaLog);
 
         menuFile.setText("File");
 
@@ -77,29 +170,32 @@ public class MainFrame extends javax.swing.JFrame {
         });
         menuFile.add(menuItemExit);
 
-        jMenuBar1.add(menuFile);
+        mbarMain.add(menuFile);
 
         menuEdit.setText("Edit");
-        jMenuBar1.add(menuEdit);
+        mbarMain.add(menuEdit);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(mbarMain);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(panelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tbStatusBar, javax.swing.GroupLayout.DEFAULT_SIZE, 543, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tbStatusBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(spLog)
+                    .addComponent(tabpaneMain))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tabpaneMain, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(spLog, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tbStatusBar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -110,9 +206,84 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuItemExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemExitActionPerformed
-        // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_menuItemExitActionPerformed
+
+    private void btnScanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScanActionPerformed
+        pbarProgress.setIndeterminate(true);
+        alldevs.clear(); //Clear the ArrayList first
+        int r = Pcap.findAllDevs(alldevs, errbuf);
+        if (r == Pcap.NOT_OK || alldevs.isEmpty()) {
+            txtaLog.append("Can't read list of devices, error is " + errbuf.toString() + "\n");
+            return;
+        }
+
+        txtaLog.append("Network devices found:\n");
+        cboxDevice.removeAllItems(); //Clear the ComboBox first
+        int i = 0;
+        for (PcapIf device : alldevs) {
+            String description
+                    = (device.getDescription() != null) ? device.getDescription() : "No description available";
+            txtaLog.append("#" + i++ + " " + device.getName() + " [" + description + "]\n");
+            cboxDevice.addItem(device.getName() + " [" + description + "]");
+//            System.out.printf("#%d: %s [%s]\n", i++, device.getName(), description);  
+        }
+
+        PcapIf device = alldevs.get(0); // We know we have atleast 1 device  
+        txtaLog.append("\nChoosing "
+                + ((device.getDescription() != null) ? device.getDescription()
+                        : device.getName()) + " on your behalf.\n\n");
+        pbarProgress.setIndeterminate(false);
+    }//GEN-LAST:event_btnScanActionPerformed
+
+    private void tbtnCaptureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnCaptureActionPerformed
+        if (tbtnCapture.isSelected()) {
+
+            pbarProgress.setIndeterminate(true);
+            txtaLog.append("\nBegining Packet Capture:\n\n");
+
+            int snaplen = 64 * 1024;           // Capture all packets, no trucation  
+            int flags = Pcap.MODE_PROMISCUOUS; // capture all packets  
+            int timeout = 10 * 1000;           // 10 seconds in millis    
+            pcap = Pcap.openLive(alldevs.get(cboxDevice.getSelectedIndex()).getName(), snaplen, flags, timeout, errbuf);
+
+            if (pcap == null) {
+                txtaLog.append("Error while opening device for capture: " + errbuf.toString() + "\n");
+                return;
+            }
+
+            PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>() {
+
+                public void nextPacket(PcapPacket packet, String user) {
+                    txtaLog.append("Received packet at " + new Date(packet.getCaptureHeader().timestampInMillis())
+                            + " caplen=" + packet.getCaptureHeader().caplen()
+                            + " len=" + packet.getCaptureHeader().wirelen()
+                            + " " + user + "\n");
+                }
+            };
+
+            int userVal = Integer.parseInt(spinPacketNumber.getValue().toString());
+            int numPackets = (userVal == 0) ? 0 : userVal;
+
+            pcap.loop(numPackets, jpacketHandler, "IDS System");
+            /**
+             * *************************************************************************
+             * Last thing to do is close the pcap handle
+             * ************************************************************************
+             */
+            txtaLog.append("\nCapture finished. Closing link to PCAP.\n");
+            pcap.close();
+            pbarProgress.setIndeterminate(false);
+        } else {
+            try {
+                pcap.close();
+            } catch (Exception e) {
+                txtaLog.append("Link to PCAP is already closed, trying anyway.\n");
+            } finally {
+                pbarProgress.setIndeterminate(false);
+            }
+        }
+    }//GEN-LAST:event_tbtnCaptureActionPerformed
 
     /**
      * @param args the command line arguments
@@ -128,16 +299,21 @@ public class MainFrame extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -150,14 +326,24 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnScan;
+    private javax.swing.JComboBox cboxDevice;
     private javax.swing.Box.Filler filler2;
-    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblDevice;
+    private javax.swing.JLabel lblPacketNumber;
     private javax.swing.JLabel lblStatus;
+    private javax.swing.JMenuBar mbarMain;
     private javax.swing.JMenu menuEdit;
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenuItem menuItemExit;
     private javax.swing.JPanel panelMain;
     private javax.swing.JProgressBar pbarProgress;
+    private javax.swing.JScrollPane spLog;
+    private javax.swing.JSpinner spinPacketNumber;
+    private javax.swing.JTabbedPane tabpaneMain;
     private javax.swing.JToolBar tbStatusBar;
+    private javax.swing.JToggleButton tbtnCapture;
+    private javax.swing.JTextArea txtaLog;
     // End of variables declaration//GEN-END:variables
 }
