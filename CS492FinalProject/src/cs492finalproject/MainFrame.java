@@ -1,16 +1,14 @@
 package cs492finalproject;
 
+import cs492finalproject.Networking.PacketCapture;
 import cs492finalproject.Utils.BoundsPopupMenuListener;
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.swing.SpinnerNumberModel;
 
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapIf;
-import org.jnetpcap.packet.PcapPacket;
-import org.jnetpcap.packet.PcapPacketHandler;
 
 /**
  *
@@ -18,9 +16,12 @@ import org.jnetpcap.packet.PcapPacketHandler;
  */
 public class MainFrame extends javax.swing.JFrame {
 
-  List<PcapIf> alldevs = new ArrayList<PcapIf>(); // Will be filled with NICs  
-  StringBuilder errbuf = new StringBuilder(); // For any error msgs
-  Pcap pcap;
+  private List<PcapIf> alldevs = new ArrayList<PcapIf>(); // Will be filled with NICs  
+  private StringBuilder errbuf = new StringBuilder(); // For any error msgs
+  private PacketCapture tPCAP;
+  private Pcap pcap;
+  private int userVal;
+  private int numPackets;
 
   public MainFrame() {
     initComponents();
@@ -230,7 +231,7 @@ public class MainFrame extends javax.swing.JFrame {
         String description
             = (device.getDescription() != null) ? device.getDescription() : "No description available";
         txtaLog.append("#" + i++ + " " + device.getName() + " [" + description + "]\n");
-        cboxDevice.addItem(device.getName() + " [" + description + "]"); 
+        cboxDevice.addItem(device.getName() + " [" + description + "]");
       }
 
       PcapIf device = alldevs.get(0); // We know we have at least 1 device  
@@ -240,10 +241,10 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnScanActionPerformed
 
     private void tbtnCaptureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnCaptureActionPerformed
-      final int userVal = Integer.parseInt(spinPacketNumber.getValue().toString());
-      final int numPackets = (userVal == 0) ? Pcap.LOOP_INFINITE : userVal;
-
-      Thread pcapThread = new Thread(new ThreadPCAP(userVal, numPackets, tbtnCapture, txtaLog, pcap, cboxDevice, alldevs, errbuf));
+      this.userVal = Integer.parseInt(spinPacketNumber.getValue().toString());
+      this.numPackets = (userVal == 0) ? Pcap.LOOP_INFINITE : userVal;
+      this.tPCAP = new PacketCapture(userVal, numPackets, tbtnCapture, txtaLog, pcap, cboxDevice, alldevs, errbuf);
+      Thread pcapThread = new Thread(tPCAP);
       pcapThread.start();
     }//GEN-LAST:event_tbtnCaptureActionPerformed
 
@@ -251,8 +252,9 @@ public class MainFrame extends javax.swing.JFrame {
       tbtnCapture.setText((tbtnCapture.isSelected() ? "Packet Capture ON" : "Packet Capture OFF"));
       lblStatus.setText((tbtnCapture.isSelected() ? "Capturing Packets..." : "Ready"));
       lblStatus.setForeground((tbtnCapture.isSelected() ? new Color(150, 100, 0) : new Color(0, 150, 0)));
-      pbarProgress.setVisible((tbtnCapture.isSelected() ? true : false));
-      pbarProgress.setIndeterminate((tbtnCapture.isSelected() ? true : false));
+      pbarProgress.setVisible(tbtnCapture.isSelected());
+      pbarProgress.setIndeterminate(tbtnCapture.isSelected());
+      if(tPCAP != null) tPCAP.setCapturing(tbtnCapture.isSelected());
     }//GEN-LAST:event_tbtnCaptureStateChanged
 
   /**
