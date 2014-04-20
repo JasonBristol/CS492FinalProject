@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cs492finalproject;
 
 import cs492finalproject.Utils.BoundsPopupMenuListener;
@@ -11,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingUtilities;
 
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapIf;
@@ -28,9 +22,6 @@ public class MainFrame extends javax.swing.JFrame {
   StringBuilder errbuf = new StringBuilder(); // For any error msgs
   Pcap pcap;
 
-  /**
-   * Creates new form MainFrame
-   */
   public MainFrame() {
     initComponents();
   }
@@ -239,11 +230,10 @@ public class MainFrame extends javax.swing.JFrame {
         String description
             = (device.getDescription() != null) ? device.getDescription() : "No description available";
         txtaLog.append("#" + i++ + " " + device.getName() + " [" + description + "]\n");
-        cboxDevice.addItem(device.getName() + " [" + description + "]");
-//            System.out.printf("#%d: %s [%s]\n", i++, device.getName(), description);  
+        cboxDevice.addItem(device.getName() + " [" + description + "]"); 
       }
 
-      PcapIf device = alldevs.get(0); // We know we have atleast 1 device  
+      PcapIf device = alldevs.get(0); // We know we have at least 1 device  
       txtaLog.append("\nChoosing "
           + ((device.getDescription() != null) ? device.getDescription()
           : device.getName()) + " on your behalf.\n");
