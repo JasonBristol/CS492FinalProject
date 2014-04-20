@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingUtilities;
 
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapIf;
@@ -45,8 +46,9 @@ public class MainFrame extends javax.swing.JFrame {
 
     tbStatusBar = new javax.swing.JToolBar();
     lblStatus = new javax.swing.JLabel();
-    filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(545, 0), new java.awt.Dimension(32767, 0));
+    filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
     pbarProgress = new javax.swing.JProgressBar();
+    filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(10, 32767));
     tabpaneMain = new javax.swing.JTabbedPane();
     panelMain = new javax.swing.JPanel();
     lblDevice = new javax.swing.JLabel();
@@ -79,7 +81,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     pbarProgress.setBorderPainted(false);
     pbarProgress.setDoubleBuffered(true);
+    pbarProgress.setMinimumSize(new java.awt.Dimension(146, 14));
     tbStatusBar.add(pbarProgress);
+    pbarProgress.setVisible(false);
+    tbStatusBar.add(filler1);
 
     lblDevice.setText("Hardware Device:");
 
@@ -220,7 +225,6 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemExitActionPerformed
 
     private void btnScanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScanActionPerformed
-      pbarProgress.setIndeterminate(true);
       alldevs.clear(); //Clear the ArrayList first
       int r = Pcap.findAllDevs(alldevs, errbuf);
       if (r == Pcap.NOT_OK || alldevs.isEmpty()) {
@@ -242,8 +246,7 @@ public class MainFrame extends javax.swing.JFrame {
       PcapIf device = alldevs.get(0); // We know we have atleast 1 device  
       txtaLog.append("\nChoosing "
           + ((device.getDescription() != null) ? device.getDescription()
-          : device.getName()) + " on your behalf.\n\n");
-      pbarProgress.setIndeterminate(false);
+          : device.getName()) + " on your behalf.\n");
     }//GEN-LAST:event_btnScanActionPerformed
 
     private void tbtnCaptureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnCaptureActionPerformed
@@ -254,8 +257,6 @@ public class MainFrame extends javax.swing.JFrame {
         @Override
         public void run() {
           while (tbtnCapture.isSelected()) {
-
-            pbarProgress.setIndeterminate(true);
             txtaLog.append("\nBeginning Packet Capture ["
                 + ((userVal == 0) ? "Infinity" : userVal) + "]:\n\n");
             int snaplen = 64 * 1024;           // Capture all packets, no trucation  
@@ -271,8 +272,8 @@ public class MainFrame extends javax.swing.JFrame {
             }
 
             PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>() {
-
-              public void nextPacket(PcapPacket packet, String user) {
+              @Override
+              public void nextPacket(final PcapPacket packet, final String user) {
                 txtaLog.append("Received packet at " + new Date(packet.getCaptureHeader().timestampInMillis())
                     + "\tcaplen=" + packet.getCaptureHeader().caplen()
                     + "\tlen=" + packet.getCaptureHeader().wirelen()
@@ -290,17 +291,17 @@ public class MainFrame extends javax.swing.JFrame {
             pcap.close();
           } catch (Exception e) {
             txtaLog.append("Link to PCAP is already closed, trying anyway.\n");
-          } finally {
-            pbarProgress.setIndeterminate(false);
           }
         }
       }.start();
     }//GEN-LAST:event_tbtnCaptureActionPerformed
 
     private void tbtnCaptureStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tbtnCaptureStateChanged
-      tbtnCapture.setText((tbtnCapture.isSelected()) ? "Packet Capture ON" : "Packet Capture OFF");
-      lblStatus.setText((tbtnCapture.isSelected()) ? "Capturing Packets..." : "Ready");
-      lblStatus.setForeground((tbtnCapture.isSelected()) ? new Color(150,0,0) : new Color(0,150,0));
+      tbtnCapture.setText((tbtnCapture.isSelected() ? "Packet Capture ON" : "Packet Capture OFF"));
+      lblStatus.setText((tbtnCapture.isSelected() ? "Capturing Packets..." : "Ready"));
+      lblStatus.setForeground((tbtnCapture.isSelected() ? new Color(150, 100, 0) : new Color(0, 150, 0)));
+      pbarProgress.setVisible((tbtnCapture.isSelected() ? true : false));
+      pbarProgress.setIndeterminate((tbtnCapture.isSelected() ? true : false));
     }//GEN-LAST:event_tbtnCaptureStateChanged
 
   /**
@@ -308,7 +309,7 @@ public class MainFrame extends javax.swing.JFrame {
    */
   public static void main(String args[]) {
     /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
      * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
      */
@@ -333,7 +334,7 @@ public class MainFrame extends javax.swing.JFrame {
       java.util.logging.Logger.getLogger(MainFrame.class
           .getName()).log(java.util.logging.Level.SEVERE, null, ex);
     }
-        //</editor-fold>
+    //</editor-fold>
 
     /* Create and display the form */
     java.awt.EventQueue.invokeLater(new Runnable() {
@@ -346,6 +347,7 @@ public class MainFrame extends javax.swing.JFrame {
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton btnScan;
   private javax.swing.JComboBox cboxDevice;
+  private javax.swing.Box.Filler filler1;
   private javax.swing.Box.Filler filler2;
   private javax.swing.JLabel lblDevice;
   private javax.swing.JLabel lblPacketNumber;
