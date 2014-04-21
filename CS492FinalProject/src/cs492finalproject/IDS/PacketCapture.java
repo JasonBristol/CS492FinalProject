@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cs492finalproject.Networking;
+package cs492finalproject.IDS;
 
+import cs492finalproject.Interfaces.LogInterface;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JComboBox;
@@ -19,7 +20,7 @@ import org.jnetpcap.packet.PcapPacketHandler;
  *
  * @author JGR
  */
-public class PacketCapture implements Runnable {
+public class PacketCapture implements Runnable, LogInterface {
 
   private JToggleButton tbtnCapture;
   private JTextArea txtaLog;
@@ -47,9 +48,8 @@ public class PacketCapture implements Runnable {
   @Override
   public void run() {
     while (isCapturing) {
-      txtaLog.append("\nBeginning Packet Capture ["
+      appendLog("\nBeginning Packet Capture ["
           + ((userVal == 0) ? "Infinity" : userVal) + "]:\n\n");
-      txtaLog.setCaretPosition(txtaLog.getText().length());
       int snaplen = 64 * 1024;           // Capture all packets, no trucation  
       int flags = Pcap.MODE_PROMISCUOUS; // capture all packets  
       int timeout = 10 * 1000;           // 10 seconds in millis    
@@ -58,8 +58,7 @@ public class PacketCapture implements Runnable {
               cboxDevice.getSelectedIndex()).getName(), snaplen, flags, timeout, errbuf);
 
       if (pcap == null) {
-        txtaLog.append("Error while opening device for capture: " + errbuf.toString() + "\n");
-        txtaLog.setCaretPosition(txtaLog.getText().length());
+        appendLog("Error while opening device for capture: " + errbuf.toString() + "\n");
         return;
       }
 
@@ -69,18 +68,16 @@ public class PacketCapture implements Runnable {
           if (!isCapturing) {
             pcap.breakloop(); // Break the loop and exit
           }
-          txtaLog.append("Received packet at " + new Date(packet.getCaptureHeader().timestampInMillis())
+          appendLog("Received packet at " + new Date(packet.getCaptureHeader().timestampInMillis())
               + "\tcaplen=" + packet.getCaptureHeader().caplen()
               + "\tlen=" + packet.getCaptureHeader().wirelen()
               + "\t" + user + "\n");
-          txtaLog.setCaretPosition(txtaLog.getText().length());
         }
       };
 
       pcap.loop(numPackets, jpacketHandler, "IDS System");
 
-      txtaLog.append("\nCapture finished. Link to PCAP closed.\n");
-      txtaLog.setCaretPosition(txtaLog.getText().length());
+      appendLog("\nCapture finished. Link to PCAP closed.\n");
       isCapturing = false;
       tbtnCapture.setSelected(false);
     }
@@ -88,13 +85,17 @@ public class PacketCapture implements Runnable {
     try {
       pcap.close();
     } catch (Exception e) {
-      txtaLog.append("Link to PCAP won't close, trying again...\n");
-      txtaLog.setCaretPosition(txtaLog.getText().length());
+      appendLog("Link to PCAP won't close, trying again...\n");
     }
   }
 
   public void setCapturing(boolean isCapturing) {
     this.isCapturing = isCapturing;
   }
-  
+
+  @Override
+  public void appendLog(String message) {
+    txtaLog.append(message);
+    txtaLog.setCaretPosition(txtaLog.getText().length());
+  }
 }

@@ -1,6 +1,7 @@
 package cs492finalproject;
 
-import cs492finalproject.Networking.PacketCapture;
+import cs492finalproject.Interfaces.LogInterface;
+import cs492finalproject.IDS.PacketCapture;
 import cs492finalproject.Utils.BoundsPopupMenuListener;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import org.jnetpcap.PcapIf;
  *
  * @author Jason
  */
-public class MainFrame extends javax.swing.JFrame {
+public class MainFrame extends javax.swing.JFrame implements LogInterface {
 
   private List<PcapIf> alldevs = new ArrayList<PcapIf>(); // Will be filled with NICs  
   private StringBuilder errbuf = new StringBuilder(); // For any error msgs
@@ -25,6 +26,12 @@ public class MainFrame extends javax.swing.JFrame {
 
   public MainFrame() {
     initComponents();
+  }
+  
+  @Override
+  public void appendLog(String message) {
+    txtaLog.append(message);
+    txtaLog.setCaretPosition(txtaLog.getText().length());
   }
 
   /**
@@ -268,22 +275,22 @@ public class MainFrame extends javax.swing.JFrame {
       alldevs.clear(); //Clear the ArrayList first
       int r = Pcap.findAllDevs(alldevs, errbuf);
       if (r == Pcap.NOT_OK || alldevs.isEmpty()) {
-        txtaLog.append("Can't read list of devices, error is " + errbuf.toString() + "\n");
+        appendLog("Can't read list of devices, error is " + errbuf.toString() + "\n");
         return;
       }
 
-      txtaLog.append("Network devices found:\n");
+      appendLog("Network devices found:\n");
       cboxDevice.removeAllItems(); //Clear the ComboBox first
       int i = 0;
       for (PcapIf device : alldevs) {
         String description
             = (device.getDescription() != null) ? device.getDescription() : "No description available";
-        txtaLog.append("#" + i++ + " " + device.getName() + " [" + description + "]\n");
+        appendLog("#" + i++ + " " + device.getName() + " [" + description + "]\n");
         cboxDevice.addItem(device.getName() + " [" + description + "]");
       }
 
       PcapIf device = alldevs.get(0); // We know we have at least 1 device  
-      txtaLog.append("\nChoosing "
+      appendLog("\nChoosing "
           + ((device.getDescription() != null) ? device.getDescription()
           : device.getName()) + " on your behalf.\n");
     }//GEN-LAST:event_btnScanActionPerformed
