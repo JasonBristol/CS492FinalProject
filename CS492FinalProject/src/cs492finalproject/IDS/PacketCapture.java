@@ -48,7 +48,7 @@ public class PacketCapture implements Runnable, LogInterface {
   @Override
   public void run() {
     while (isCapturing) {
-      appendLog("\nBeginning Packet Capture ["
+      appendLog(txtaLog, "\nBeginning Packet Capture ["
           + ((userVal == 0) ? "Infinity" : userVal) + "]:\n\n");
       int snaplen = 64 * 1024;           // Capture all packets, no trucation  
       int flags = Pcap.MODE_PROMISCUOUS; // capture all packets  
@@ -58,7 +58,7 @@ public class PacketCapture implements Runnable, LogInterface {
               cboxDevice.getSelectedIndex()).getName(), snaplen, flags, timeout, errbuf);
 
       if (pcap == null) {
-        appendLog("Error while opening device for capture: " + errbuf.toString() + "\n");
+        appendLog(txtaLog, "Error while opening device for capture: " + errbuf.toString() + "\n");
         return;
       }
 
@@ -68,7 +68,7 @@ public class PacketCapture implements Runnable, LogInterface {
           if (!isCapturing) {
             pcap.breakloop(); // Break the loop and exit
           }
-          appendLog("Received packet at " + new Date(packet.getCaptureHeader().timestampInMillis())
+          appendLog(txtaLog, "Received packet at " + new Date(packet.getCaptureHeader().timestampInMillis())
               + "\tcaplen=" + packet.getCaptureHeader().caplen()
               + "\tlen=" + packet.getCaptureHeader().wirelen()
               + "\t" + user + "\n");
@@ -77,7 +77,7 @@ public class PacketCapture implements Runnable, LogInterface {
 
       pcap.loop(numPackets, jpacketHandler, "IDS System");
 
-      appendLog("\nCapture finished. Link to PCAP closed.\n");
+      appendLog(txtaLog, "\nCapture finished. Link to PCAP closed.\n");
       isCapturing = false;
       tbtnCapture.setSelected(false);
     }
@@ -85,7 +85,7 @@ public class PacketCapture implements Runnable, LogInterface {
     try {
       pcap.close();
     } catch (Exception e) {
-      appendLog("Link to PCAP won't close, trying again...\n");
+      appendLog(txtaLog, "Link to PCAP won't close, trying again...\n");
     }
   }
 
@@ -94,8 +94,8 @@ public class PacketCapture implements Runnable, LogInterface {
   }
 
   @Override
-  public void appendLog(String message) {
-    txtaLog.append(message);
-    txtaLog.setCaretPosition(txtaLog.getText().length());
+  public void appendLog(JTextArea log, String message) {
+    log.append(message);
+    log.setCaretPosition(log.getText().length());
   }
 }

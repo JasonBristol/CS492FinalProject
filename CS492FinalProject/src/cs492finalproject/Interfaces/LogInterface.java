@@ -6,10 +6,12 @@
 
 package cs492finalproject.Interfaces;
 
+import javax.swing.JTextArea;
+
 /**
  *
  * @author JBristol
  */
 public interface LogInterface {
-  public void appendLog(String message);
+  public void appendLog(JTextArea log, String message);
 }

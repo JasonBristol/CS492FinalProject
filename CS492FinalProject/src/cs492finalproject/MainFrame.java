@@ -6,6 +6,7 @@ import cs492finalproject.Utils.BoundsPopupMenuListener;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
 
 import org.jnetpcap.Pcap;
@@ -29,9 +30,9 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
   }
   
   @Override
-  public void appendLog(String message) {
-    txtaLog.append(message);
-    txtaLog.setCaretPosition(txtaLog.getText().length());
+  public void appendLog(JTextArea log, String message) {
+    log.append(message);
+    log.setCaretPosition(log.getText().length());
   }
 
   /**
@@ -275,22 +276,22 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
       alldevs.clear(); //Clear the ArrayList first
       int r = Pcap.findAllDevs(alldevs, errbuf);
       if (r == Pcap.NOT_OK || alldevs.isEmpty()) {
-        appendLog("Can't read list of devices, error is " + errbuf.toString() + "\n");
+        appendLog(txtaLog, "Can't read list of devices, error is " + errbuf.toString() + "\n");
         return;
       }
 
-      appendLog("Network devices found:\n");
+      appendLog(txtaLog, "Network devices found:\n");
       cboxDevice.removeAllItems(); //Clear the ComboBox first
       int i = 0;
       for (PcapIf device : alldevs) {
         String description
             = (device.getDescription() != null) ? device.getDescription() : "No description available";
-        appendLog("#" + i++ + " " + device.getName() + " [" + description + "]\n");
+        appendLog(txtaLog, "#" + i++ + " " + device.getName() + " [" + description + "]\n");
         cboxDevice.addItem(device.getName() + " [" + description + "]");
       }
 
       PcapIf device = alldevs.get(0); // We know we have at least 1 device  
-      appendLog("\nChoosing "
+      appendLog(txtaLog, "\nChoosing "
           + ((device.getDescription() != null) ? device.getDescription()
           : device.getName()) + " on your behalf.\n");
     }//GEN-LAST:event_btnScanActionPerformed
