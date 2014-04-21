@@ -6,7 +6,7 @@ Project uses <a href="http://jnetpcap.com/">Jnetpcap</a> to capture packets, and
 
 <b>Possible Features:</b>
 <ul>
-  <li>Visualization of Anomalies being detected (using jpcap).</li>
+  <li>Visualization of Anomalies being detected.</li>
   <li>Import of pcap files for batch processing.</li>
   <li>Ability to focus on specific ports for analysis.</li> 
 </ul>
