@@ -27,7 +27,7 @@ public class PcapDumperExample {
           errbuf.toString());
       return;
     }
-    PcapIf device = alldevs.get(1); // We know we have atleast 1 device
+    PcapIf device = alldevs.get(0); // We know we have atleast 1 device
 
     /**
      * *************************************************************************

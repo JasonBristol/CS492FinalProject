@@ -6,6 +6,7 @@
 package cs492finalproject.IDS;
 
 import cs492finalproject.Interfaces.LogInterface;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JComboBox;
@@ -15,6 +16,8 @@ import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapIf;
 import org.jnetpcap.packet.PcapPacket;
 import org.jnetpcap.packet.PcapPacketHandler;
+import org.jnetpcap.protocol.network.Ip4;
+import org.jnetpcap.protocol.tcpip.Tcp;
 
 /**
  *
@@ -31,6 +34,7 @@ public class PacketCapture implements Runnable, LogInterface {
   private final int userVal;
   private final int numPackets;
   private volatile boolean isCapturing;
+  private SimpleDateFormat dform = new SimpleDateFormat("h:mm:ss a");
 
   public PacketCapture(final int userVal, final int numPackets, JToggleButton tbtnCapture,
       JTextArea txtaLog, Pcap pcap, JComboBox cboxDevice, List<PcapIf> alldevs, StringBuilder errbuf) {
@@ -63,15 +67,36 @@ public class PacketCapture implements Runnable, LogInterface {
       }
 
       PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>() {
+
+        Tcp tcp = new Tcp();
+        Ip4 ipv4 = new Ip4();
+
+        byte[] dIP = new byte[4], sIP = new byte[4];
+
         @Override
         public void nextPacket(final PcapPacket packet, final String user) {
           if (!isCapturing) {
             pcap.breakloop(); // Break the loop and exit
           }
-          appendLog(txtaLog, "Received packet at " + new Date(packet.getCaptureHeader().timestampInMillis())
+
+          if (packet.hasHeader(ipv4)) {
+            dIP = packet.getHeader(ipv4).destination();
+            sIP = packet.getHeader(ipv4).source();
+          }
+          
+          if (packet.hasHeader(tcp)) {
+            packet.getHeader(tcp);
+          }
+
+          String srcIP = org.jnetpcap.packet.format.FormatUtils.ip(sIP);
+          String destIP = org.jnetpcap.packet.format.FormatUtils.ip(dIP);
+          String date = dform.format(new Date(packet.getCaptureHeader().timestampInMillis()));
+
+          appendLog(txtaLog, "Received packet at " + date
+              + "\tsrc=" + srcIP + ":" + tcp.source() + "\tdest=" + destIP + ":" + tcp.destination()
               + "\tcaplen=" + packet.getCaptureHeader().caplen()
               + "\tlen=" + packet.getCaptureHeader().wirelen()
-              + "\t" + user + "\n");
+              + "\n");
         }
       };
 
