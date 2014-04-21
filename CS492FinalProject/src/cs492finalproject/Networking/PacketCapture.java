@@ -49,6 +49,7 @@ public class PacketCapture implements Runnable {
     while (isCapturing) {
       txtaLog.append("\nBeginning Packet Capture ["
           + ((userVal == 0) ? "Infinity" : userVal) + "]:\n\n");
+      txtaLog.setCaretPosition(txtaLog.getText().length());
       int snaplen = 64 * 1024;           // Capture all packets, no trucation  
       int flags = Pcap.MODE_PROMISCUOUS; // capture all packets  
       int timeout = 10 * 1000;           // 10 seconds in millis    
@@ -58,6 +59,7 @@ public class PacketCapture implements Runnable {
 
       if (pcap == null) {
         txtaLog.append("Error while opening device for capture: " + errbuf.toString() + "\n");
+        txtaLog.setCaretPosition(txtaLog.getText().length());
         return;
       }
 
@@ -71,12 +73,14 @@ public class PacketCapture implements Runnable {
               + "\tcaplen=" + packet.getCaptureHeader().caplen()
               + "\tlen=" + packet.getCaptureHeader().wirelen()
               + "\t" + user + "\n");
+          txtaLog.setCaretPosition(txtaLog.getText().length());
         }
       };
 
       pcap.loop(numPackets, jpacketHandler, "IDS System");
 
       txtaLog.append("\nCapture finished. Link to PCAP closed.\n");
+      txtaLog.setCaretPosition(txtaLog.getText().length());
       isCapturing = false;
       tbtnCapture.setSelected(false);
     }
@@ -85,10 +89,12 @@ public class PacketCapture implements Runnable {
       pcap.close();
     } catch (Exception e) {
       txtaLog.append("Link to PCAP won't close, trying again...\n");
+      txtaLog.setCaretPosition(txtaLog.getText().length());
     }
   }
 
   public void setCapturing(boolean isCapturing) {
     this.isCapturing = isCapturing;
   }
+  
 }

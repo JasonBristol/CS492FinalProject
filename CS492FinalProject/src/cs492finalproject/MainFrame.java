@@ -62,7 +62,6 @@ public class MainFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CS 492 - Host-Based IDS System");
         setName("frameMaine"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(750, 500));
         setResizable(false);
 
         tbStatusBar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -210,6 +209,7 @@ public class MainFrame extends javax.swing.JFrame {
         txtaLog.setLineWrap(true);
         txtaLog.setRows(5);
         txtaLog.setWrapStyleWord(true);
+        txtaLog.setCaret(txtaLog.getCaret());
         txtaLog.setDoubleBuffered(true);
         txtaLog.setSelectionColor(new java.awt.Color(0, 153, 102));
         spLog.setViewportView(txtaLog);
