@@ -34,7 +34,7 @@ public class PacketCapture implements Runnable, LogInterface {
   private final int userVal;
   private final int numPackets;
   private volatile boolean isCapturing;
-  private SimpleDateFormat dform = new SimpleDateFormat("h:mm:ss a");
+  private SimpleDateFormat dform = new SimpleDateFormat("MMM dd h:mm:ss a");
 
   public PacketCapture(final int userVal, final int numPackets, JToggleButton tbtnCapture,
       JTextArea txtaLog, Pcap pcap, JComboBox cboxDevice, List<PcapIf> alldevs, StringBuilder errbuf) {
@@ -91,11 +91,16 @@ public class PacketCapture implements Runnable, LogInterface {
           String srcIP = org.jnetpcap.packet.format.FormatUtils.ip(sIP);
           String destIP = org.jnetpcap.packet.format.FormatUtils.ip(dIP);
           String date = dform.format(new Date(packet.getCaptureHeader().timestampInMillis()));
+          String srcPort = (tcp != null) ? ":" + String.valueOf(tcp.source()) : "";
+          String destPort = (tcp != null) ? ":" + String.valueOf(tcp.destination()) : "";
+          String sequence = (tcp != null) ? String.valueOf(tcp.seq()) : "-";
 
-          appendLog(txtaLog, "Received packet at " + date
-              + "\tsrc=" + srcIP + ":" + tcp.source() + "\tdest=" + destIP + ":" + tcp.destination()
-              + "\tcaplen=" + packet.getCaptureHeader().caplen()
-              + "\tlen=" + packet.getCaptureHeader().wirelen()
+          appendLog(txtaLog, "#---| " + date
+              + "\t" + srcIP + srcPort + "\t=====>\t" + destIP + destPort
+//              + "\tcaplen=" + packet.getCaptureHeader().caplen()
+//              + "\tlen=" + packet.getCaptureHeader().wirelen()
+//              +"\tack=" + tcp.ack()
+              + "\tseq=" + sequence
               + "\n");
         }
       };
