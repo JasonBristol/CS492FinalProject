@@ -285,7 +285,7 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
         return;
       }
 
-      appendLog(txtaLog, "Network devices found:\n", Color.BLACK);
+      appendLog(txtaLog, "Network devices found:\n", Color.DARK_GRAY);
       cboxDevice.removeAllItems(); //Clear the ComboBox first
       int i = 1;
       for (PcapIf device : alldevs) {
@@ -293,7 +293,7 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
           String description
               = (device.getDescription() != null) ? device.getDescription() : "No description available";
           appendLog(txtaLog, "    " + i++ + "." + device.getName() + " [" + description + "]"
-              + " [" + asString(device.getHardwareAddress()) + "] " + "\n", Color.BLACK);
+              + " [" + asString(device.getHardwareAddress()) + "] " + "\n", Color.DARK_GRAY);
           cboxDevice.addItem(description + " - [" + asString(device.getHardwareAddress()) + "]");
         } catch (IOException e) {
           // Fail silently, device doesn't have a hardware address

@@ -42,7 +42,7 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
         }
       }
     }
-    appendLog(txtArea, "Terminating Analzyer Thread.", Color.BLACK);
+    appendLog(txtArea, "Terminating Analzyer Thread.", Color.DARK_GRAY);
   }
 
   private void checkTcpFlags(PcapPacket packet) {
@@ -75,6 +75,6 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
     } catch (Exception e) {
       // Fail Silently
     }
-    log.setCaretPosition(0);
+    log.setCaretPosition(doc.getLength());
   }
 }
