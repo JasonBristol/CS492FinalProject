@@ -6,8 +6,12 @@
 package cs492finalproject.IDS;
 
 import cs492finalproject.Interfaces.LogInterface;
+import java.awt.Color;
 import java.util.LinkedList;
-import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import org.jnetpcap.packet.PcapPacket;
 import org.jnetpcap.protocol.network.Ip4;
 import org.jnetpcap.protocol.tcpip.Tcp;
@@ -19,9 +23,9 @@ import org.jnetpcap.protocol.tcpip.Tcp;
 public class PacketHeaderAnalyzer implements Runnable, LogInterface {
 
   private final LinkedList<PcapPacket> packets;
-  private final JTextArea txtArea;
+  private final JTextPane txtArea;
 
-  public PacketHeaderAnalyzer(JTextArea txtArea) {
+  public PacketHeaderAnalyzer(JTextPane txtArea) {
     this.txtArea = txtArea;
     packets = new LinkedList<PcapPacket>();
 
@@ -38,7 +42,7 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
         }
       }
     }
-    appendLog(txtArea, "Terminating Analzyer Thread.");
+    appendLog(txtArea, "Terminating Analzyer Thread.", Color.BLACK);
   }
 
   private void checkTcpFlags(PcapPacket packet) {
@@ -58,8 +62,19 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
   }
 
   @Override
-  public void appendLog(JTextArea log, String message) {
-    log.append(message);
-    log.setCaretPosition(log.getText().length());
+  public void appendLog(JTextPane log, String message, Color txtColor) {
+    StyledDocument doc = log.getStyledDocument();
+    SimpleAttributeSet aset = new SimpleAttributeSet();
+    StyleConstants.setForeground(aset, txtColor);
+    try {
+      if (doc.getLength() == 0) {
+        log.getDocument().insertString(0, message, aset);
+      } else {
+        log.getDocument().insertString(doc.getLength(), message, aset);
+      }
+    } catch (Exception e) {
+      // Fail Silently
+    }
+    log.setCaretPosition(0);
   }
 }

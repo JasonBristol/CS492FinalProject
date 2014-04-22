@@ -7,8 +7,11 @@ import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapIf;
@@ -31,9 +34,20 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
   }
 
   @Override
-  public void appendLog(JTextArea log, String message) {
-    log.append(message);
-    log.setCaretPosition(log.getText().length());
+  public void appendLog(JTextPane log, String message, Color txtColor) {
+    StyledDocument doc = log.getStyledDocument();
+    SimpleAttributeSet aset = new SimpleAttributeSet();
+    StyleConstants.setForeground(aset, txtColor);
+    try {
+      if (doc.getLength() == 0) {
+        log.getDocument().insertString(0, message, aset);
+      } else {
+        log.getDocument().insertString(doc.getLength(), message, aset);
+      }
+    } catch (Exception e) {
+      // Fail Silently
+    }
+    log.setCaretPosition(0);
   }
 
   /**
@@ -62,7 +76,7 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
     panelPHA = new javax.swing.JPanel();
     panelAnomaly = new javax.swing.JPanel();
     spLog = new javax.swing.JScrollPane();
-    txtaLog = new javax.swing.JTextArea();
+    txtaLog = new javax.swing.JTextPane();
     mbarMain = new javax.swing.JMenuBar();
     menuFile = new javax.swing.JMenu();
     menuItemExit = new javax.swing.JMenuItem();
@@ -70,8 +84,8 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("CS 492 - Host-Based IDS System");
+    setMinimumSize(new java.awt.Dimension(750, 500));
     setName("frameMaine"); // NOI18N
-    setResizable(false);
 
     tbStatusBar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     tbStatusBar.setFloatable(false);
@@ -207,15 +221,9 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
 
     spLog.setAutoscrolls(true);
 
-    txtaLog.setEditable(false);
     txtaLog.setBackground(new java.awt.Color(204, 204, 255));
-    txtaLog.setColumns(20);
+    txtaLog.setFont(new java.awt.Font("Monospaced", 0, 11)); // NOI18N
     txtaLog.setForeground(new java.awt.Color(51, 51, 51));
-    txtaLog.setLineWrap(true);
-    txtaLog.setRows(5);
-    txtaLog.setWrapStyleWord(true);
-    txtaLog.setCaret(txtaLog.getCaret());
-    txtaLog.setDoubleBuffered(true);
     txtaLog.setSelectionColor(new java.awt.Color(0, 153, 102));
     spLog.setViewportView(txtaLog);
 
@@ -245,8 +253,8 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
         .addContainerGap()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(tbStatusBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-          .addComponent(spLog)
-          .addComponent(tabpaneMain))
+          .addComponent(tabpaneMain)
+          .addComponent(spLog, javax.swing.GroupLayout.Alignment.TRAILING))
         .addContainerGap())
     );
     layout.setVerticalGroup(
@@ -273,19 +281,19 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
       alldevs.clear(); //Clear the ArrayList first
       int r = Pcap.findAllDevs(alldevs, errbuf);
       if (r == Pcap.NOT_OK || alldevs.isEmpty()) {
-        appendLog(txtaLog, "Can't read list of devices, error is " + errbuf.toString() + "\n");
+        appendLog(txtaLog, "Can't read list of devices, error is " + errbuf.toString() + "\n", Color.RED);
         return;
       }
 
-      appendLog(txtaLog, "Network devices found:\n");
+      appendLog(txtaLog, "Network devices found:\n", Color.BLACK);
       cboxDevice.removeAllItems(); //Clear the ComboBox first
       int i = 1;
       for (PcapIf device : alldevs) {
         try {
           String description
               = (device.getDescription() != null) ? device.getDescription() : "No description available";
-          appendLog(txtaLog, "    " + i++ + "." + device.getName() + " [" + description + "]" + 
-              " [" + asString(device.getHardwareAddress()) + "] " + "\n");
+          appendLog(txtaLog, "    " + i++ + "." + device.getName() + " [" + description + "]"
+              + " [" + asString(device.getHardwareAddress()) + "] " + "\n", Color.BLACK);
           cboxDevice.addItem(description + " - [" + asString(device.getHardwareAddress()) + "]");
         } catch (IOException e) {
           // Fail silently, device doesn't have a hardware address
@@ -295,7 +303,7 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
       PcapIf device = alldevs.get(0); // We know we have at least 1 device  
       appendLog(txtaLog, "\nChoosing "
           + ((device.getDescription() != null) ? device.getDescription()
-          : device.getName()) + " on your behalf.\n");
+          : device.getName()) + " on your behalf.\n", Color.BLUE);
     }//GEN-LAST:event_btnScanActionPerformed
 
     private void tbtnCaptureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnCaptureActionPerformed
@@ -378,6 +386,7 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
   private javax.swing.JComboBox cboxDevice;
   private javax.swing.Box.Filler filler1;
   private javax.swing.Box.Filler filler2;
+  private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JLabel lblDevice;
   private javax.swing.JLabel lblPacketNumber;
   private javax.swing.JLabel lblStatus;
@@ -395,6 +404,6 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
   private javax.swing.JTabbedPane tabpaneMain;
   private javax.swing.JToolBar tbStatusBar;
   private javax.swing.JToggleButton tbtnCapture;
-  private javax.swing.JTextArea txtaLog;
+  private javax.swing.JTextPane txtaLog;
   // End of variables declaration//GEN-END:variables
 }
