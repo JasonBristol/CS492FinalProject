@@ -60,11 +60,26 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
       try {
           IP = InetAddress.getLocalHost();
           if (org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()).equals(IP.getHostAddress())){
-              outgoing++;
+              // check outgoing details
+              if(packet.hasHeader(tcp)) {
+                  outgoing++;
+                  if(packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) outgoingSYNACK++;
+                  if(packet.getHeader(tcp).flags_RST()) outgoingRST++;
+                  if(packet.getHeader(tcp).flags_SYN()) outgoingSYN++;
+                  if(packet.getHeader(tcp).flags_FIN()) outgoingFIN++;
+              }
+              
           } else {
-              incoming++;
+              // check outgoing details
+              if(packet.hasHeader(tcp)) {
+                  incoming++;
+                  if(packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) incomingSYNACK++;
+                  if(packet.getHeader(tcp).flags_SYN()) incomingSYN++;
+                  if(packet.getHeader(tcp).flags_FIN()) incomingFIN++;
+              }
           }
-          appendLog(txtArea, "incoming: " + incoming + "\toutgoing: " + outgoing + "\t " + IP.getHostAddress() + "\t " +  org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + "\n", Color.red);
+          appendLog(txtArea, "c1: " + incomingSYN + " c2:" + outgoingSYNACK + " c3:" + outgoingRST + " c4:" + outgoingSYN + " c5:" + incomingSYNACK + " c6:" + outgoingFIN + " c7:" + incomingFIN + "\n", Color.black);
+          //appendLog(txtArea, "incoming: " + incoming + "\toutgoing: " + outgoing + "\t " + IP.getHostAddress() + "\t " +  org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + "\n", Color.red);
       } catch (UnknownHostException ex) {
           Logger.getLogger(PacketHeaderAnalyzer.class.getName()).log(Level.SEVERE, null, ex);
       }
