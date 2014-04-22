@@ -177,7 +177,6 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
     );
 
     tabpaneMain.addTab("Packet Filtering", panelFiltering);
-    tabpaneMain.setEnabledAt(tabpaneMain.indexOfTab("Packet Filtering"), false);
 
     javax.swing.GroupLayout panelPHALayout = new javax.swing.GroupLayout(panelPHA);
     panelPHA.setLayout(panelPHALayout);
@@ -191,7 +190,6 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
     );
 
     tabpaneMain.addTab("PHA", panelPHA);
-    tabpaneMain.setEnabledAt(tabpaneMain.indexOfTab("PHA"), false);
 
     javax.swing.GroupLayout panelAnomalyLayout = new javax.swing.GroupLayout(panelAnomaly);
     panelAnomaly.setLayout(panelAnomalyLayout);

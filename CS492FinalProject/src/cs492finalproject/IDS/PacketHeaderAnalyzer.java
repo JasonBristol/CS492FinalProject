@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package cs492finalproject.IDS;
 
+import cs492finalproject.Interfaces.LogInterface;
 import java.util.LinkedList;
 import javax.swing.JTextArea;
 import org.jnetpcap.packet.PcapPacket;
@@ -16,26 +16,27 @@ import org.jnetpcap.protocol.tcpip.Tcp;
  *
  * @author JBristol
  */
-public class PacketHeaderAnalyzer implements Runnable {
-    private LinkedList<PcapPacket> packets;
-    private JTextArea txtArea;
-    
-    public PacketHeaderAnalyzer(JTextArea txtArea) {
-        this.txtArea = txtArea;
-        packets = new LinkedList<PcapPacket>();
-        
-    }
+public class PacketHeaderAnalyzer implements Runnable, LogInterface {
 
-    @Override
-    public void run() {
-        Tcp tcp = new Tcp();
-        while(!Thread.interrupted()){
-            if (!packets.isEmpty()) {
-                PcapPacket currentPacket = packets.removeFirst();
-                if (currentPacket.hasHeader(tcp)) checkTcpFlags(currentPacket);
-            }
+  private final LinkedList<PcapPacket> packets;
+  private final JTextArea txtArea;
+
+  public PacketHeaderAnalyzer(JTextArea txtArea) {
+    this.txtArea = txtArea;
+    packets = new LinkedList<PcapPacket>();
+
+  }
+
+  @Override
+  public void run() {
+    Tcp tcp = new Tcp();
+    while (!Thread.interrupted()) {
+      if (!packets.isEmpty()) {
+        PcapPacket currentPacket = packets.removeFirst();
+        if (currentPacket.hasHeader(tcp)) {
+          checkTcpFlags(currentPacket);
         }
-        appendLog(txtArea, "Terminating Analzyer Thread.");
+      }
     }
     
     private void checkTcpFlags(PcapPacket packet){
@@ -56,12 +57,14 @@ public class PacketHeaderAnalyzer implements Runnable {
             appendLog(txtArea, org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + " is Suspicious 003\n");
         }
     }
-    
-    public void addPacket(PcapPacket packet){
-        packets.add(packet);
-    }
-    
-    private void appendLog(JTextArea log, String message) {
+  }
+
+  public void addPacket(PcapPacket packet) {
+    packets.add(packet);
+  }
+
+  @Override
+  public void appendLog(JTextArea log, String message) {
     log.append(message);
     log.setCaretPosition(log.getText().length());
   }
