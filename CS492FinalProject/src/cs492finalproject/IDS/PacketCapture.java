@@ -87,7 +87,7 @@ public class PacketCapture implements Runnable, LogInterface {
           // Add packet to Analzyer Thread
           PcapPacket clone = packet;
           PHA.addPacket(clone);
-          
+          /*
           if (packet.hasHeader(ipv4)) {
             // If it has an IPv4 header, lets build some strings
             srcIP = org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source());
@@ -107,7 +107,7 @@ public class PacketCapture implements Runnable, LogInterface {
           appendLog(txtaLog, "#---| " + date
               + "\t" + srcIP + srcPort + "\t=====>\t" + destIP + destPort
               + "\t" + sequence
-              + "\n");
+              + "\n"); */
         }
       };
 
