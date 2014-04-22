@@ -35,6 +35,7 @@ public class PacketCapture implements Runnable, LogInterface {
   private final int numPackets;
   private volatile boolean isCapturing;
   private final SimpleDateFormat dform = new SimpleDateFormat("MMM dd h:mm:ss a");
+  private PacketHeaderAnalyzer PHA;
 
   public PacketCapture(final int userVal, final int numPackets, JToggleButton tbtnCapture,
       JTextArea txtaLog, Pcap pcap, JComboBox cboxDevice, List<PcapIf> alldevs, StringBuilder errbuf) {
@@ -47,12 +48,13 @@ public class PacketCapture implements Runnable, LogInterface {
     this.alldevs = alldevs;
     this.errbuf = errbuf;
     this.isCapturing = false;
+    
   }
 
   @Override
   public void run() {
     // Create Analyzer Thread
-    final PacketHeaderAnalyzer PHA = new PacketHeaderAnalyzer((txtaLog));
+    PHA = new PacketHeaderAnalyzer(txtaLog);
     Thread analyzer = new Thread(PHA);
     analyzer.start();
     

@@ -261,9 +261,6 @@
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="panelFiltering">
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="tabpaneMain.setEnabledAt(tabpaneMain.indexOfTab(&quot;Packet Filtering&quot;), false);"/>
-          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Packet Filtering">
@@ -286,9 +283,6 @@
           </Layout>
         </Container>
         <Container class="javax.swing.JPanel" name="panelPHA">
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="tabpaneMain.setEnabledAt(tabpaneMain.indexOfTab(&quot;PHA&quot;), false);"/>
-          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="PHA">
