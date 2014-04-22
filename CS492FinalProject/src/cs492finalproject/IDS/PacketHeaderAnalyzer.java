@@ -42,8 +42,18 @@ public class PacketHeaderAnalyzer implements Runnable {
         Tcp tcp = new Tcp();
         Ip4 ipv4 = new Ip4();
         //WORK IN PROGRESS
-        if(packet.getHeader(tcp).flags_ACK()) {
-            //appendLog(txtArea, org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + "is ACK \n");
+        
+        // SYN and URG invalid
+        if(packet.getHeader(tcp).flags_SYN() && packet.getHeader(tcp).flags_URG() ) {
+            appendLog(txtArea, org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + " is Suspicious 001\n");
+        }
+        // SYN and PSH invalid
+        if(packet.getHeader(tcp).flags_SYN() && packet.getHeader(tcp).flags_PSH() ) {
+            appendLog(txtArea, org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + " is Suspicious 002\n");
+        }
+        // SYN and FIN and RST
+        if(packet.getHeader(tcp).flags_SYN() && packet.getHeader(tcp).flags_FIN() && packet.getHeader(tcp).flags_RST() ) {
+            appendLog(txtArea, org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + " is Suspicious 003\n");
         }
     }
     
