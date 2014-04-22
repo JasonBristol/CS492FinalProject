@@ -97,6 +97,9 @@ public class PacketCapture implements Runnable, LogInterface {
           String srcIP = org.jnetpcap.packet.format.FormatUtils.ip(sIP);
           String destIP = org.jnetpcap.packet.format.FormatUtils.ip(dIP);
           String date = dform.format(new Date(packet.getCaptureHeader().timestampInMillis()));
+          String srcPort = (tcp != null) ? ":" + String.valueOf(tcp.source()) : "";
+          String destPort = (tcp != null) ? ":" + String.valueOf(tcp.destination()) : "";
+          String sequence = (tcp != null) ? String.valueOf(tcp.seq()) : "-";
 
           appendLog(txtaLog, "#---| " + date
               + "\t" + srcIP + srcPort + "\t=====>\t" + destIP + destPort
