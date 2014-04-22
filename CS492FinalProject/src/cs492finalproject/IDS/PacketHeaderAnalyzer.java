@@ -7,7 +7,11 @@ package cs492finalproject.IDS;
 
 import cs492finalproject.Interfaces.LogInterface;
 import java.awt.Color;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTextPane;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
@@ -24,31 +28,50 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
 
   private final LinkedList<PcapPacket> packets;
   private final JTextPane txtArea;
+  private int incoming, outgoing, incomingSYN, outgoingSYN, outgoingRST, incomingSYNACK, outgoingSYNACK, incomingFIN, outgoingFIN;
 
   public PacketHeaderAnalyzer(JTextPane txtArea) {
     this.txtArea = txtArea;
     packets = new LinkedList<PcapPacket>();
+    incoming = 0;
+    outgoing = 0;
 
   }
 
   @Override
   public void run() {
     Tcp tcp = new Tcp();
+    Ip4 ipv4 = new Ip4();
     while (!Thread.interrupted()) {
       if (!packets.isEmpty()) {
         PcapPacket currentPacket = packets.removeFirst();
         if (currentPacket.hasHeader(tcp)) {
-          checkTcpFlags(currentPacket);
-          checkHeaderSize(currentPacket);
+          //checkTcpFlags(currentPacket);
+          SYNScan(currentPacket);
         }
       }
     }
     appendLog(txtArea, "Terminating Analzyer Thread.", Color.BLACK);
   }
-    private void checkHeaderSize(PcapPacket packet) {
+    private void SYNScan(PcapPacket packet) {
         Tcp tcp = new Tcp();
         Ip4 ipv4 = new Ip4();
-        appendLog(txtArea, "Header Length " + packet.getHeader(tcp).getHeaderLength() + "\n") ;
+        InetAddress IP;
+      try {
+          IP = InetAddress.getLocalHost();
+          if (org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()).equals(IP.getHostAddress())){
+              outgoing++;
+          } else {
+              incoming++;
+          }
+          appendLog(txtArea, "incoming: " + incoming + "\toutgoing: " + outgoing + "\t " + IP.getHostAddress() + "\t " +  org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + "\n", Color.red);
+      } catch (UnknownHostException ex) {
+          Logger.getLogger(PacketHeaderAnalyzer.class.getName()).log(Level.SEVERE, null, ex);
+      }
+        /*
+        if (org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()).equals("192.168.0.2") || org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()).equals("192.168.0.3")) {
+            appendLog(txtArea, "Source: " + org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + "\n", Color.red);
+        }*/
     }
     
     private void checkTcpFlags(PcapPacket packet){
@@ -58,15 +81,16 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
 
         // SYN and URG invalid
         if(packet.getHeader(tcp).flags_SYN() && packet.getHeader(tcp).flags_URG() ) {
-            appendLog(txtArea, org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + " is Suspicious 001\n");
+            appendLog(txtArea, org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + " is Suspicious 001\n", Color.black
+            );
         }
         // SYN and PSH invalid
         if(packet.getHeader(tcp).flags_SYN() && packet.getHeader(tcp).flags_PSH() ) {
-            appendLog(txtArea, org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + " is Suspicious 002\n");
+            appendLog(txtArea, org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + " is Suspicious 002\n",Color.black);
         }
         // SYN and FIN and RST
         if(packet.getHeader(tcp).flags_SYN() && packet.getHeader(tcp).flags_FIN() && packet.getHeader(tcp).flags_RST() ) {
-            appendLog(txtArea, org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + " is Suspicious 003\n");
+            appendLog(txtArea, org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + " is Suspicious 003\n", Color.black);
         }
     }
 

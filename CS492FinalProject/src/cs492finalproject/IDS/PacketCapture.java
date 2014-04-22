@@ -96,7 +96,6 @@ public class PacketCapture implements Runnable, LogInterface {
           // Add packet to Analzyer Thread
           PcapPacket clone = packet;
           PHA.addPacket(clone);
-          /*
           if (packet.hasHeader(ipv4)) {
             // If it has an IPv4 header, lets clone that and build some strings
             packet.getHeader(ipv4);
@@ -118,7 +117,7 @@ public class PacketCapture implements Runnable, LogInterface {
 
           // Capture header strings
           String date = dform.format(new Date(packet.getCaptureHeader().timestampInMillis()));
-
+          /*
           appendLog(txtaLog, "#---| " + date
               + "\t" + srcIP + srcPort + "\t=====>\t" + destIP + destPort
               + "\t" + sequence
@@ -126,7 +125,7 @@ public class PacketCapture implements Runnable, LogInterface {
               + "\t" + offset
               + "\t" + flags
               + "\t" + checksum
-              + "\n", new Color(0,200,55));
+              + "\n", new Color(0,200,55));*/
         }
       };
 
