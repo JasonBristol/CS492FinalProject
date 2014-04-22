@@ -61,6 +61,9 @@ public class PacketCapture implements Runnable, LogInterface {
         Ip4 ipv4 = new Ip4();
 
         byte[] dIP = new byte[4], sIP = new byte[4];
+        String srcPort = "";
+        String destPort = "";
+        String sequence = "";
 
         @Override
         public void nextPacket(final PcapPacket packet, final String user) {
@@ -74,9 +77,9 @@ public class PacketCapture implements Runnable, LogInterface {
           
           if (packet.hasHeader(tcp)) {
             packet.getHeader(tcp);
-            srcPort = String.valueOf(tcp.source());
-            destPort = String.valueOf(tcp.destination());
-            sequence = String.valueOf(tcp.seq());
+            srcPort = ":" + String.valueOf(tcp.source());
+            destPort = ":" + String.valueOf(tcp.destination());
+            sequence = "seq=" + String.valueOf(tcp.seq());
           }
 
           String date = dform.format(new Date(packet.getCaptureHeader().timestampInMillis()));
@@ -85,7 +88,7 @@ public class PacketCapture implements Runnable, LogInterface {
 //              + "\tcaplen=" + packet.getCaptureHeader().caplen()
 //              + "\tlen=" + packet.getCaptureHeader().wirelen()
 //              +"\tack=" + tcp.ack()
-              + "\tseq=" + sequence
+              + "\t" + sequence
               + "\n");
         }
       };
