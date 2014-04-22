@@ -75,8 +75,8 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="tabpaneMain" min="-2" pref="148" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="spLog" pref="267" max="32767" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="spLog" pref="272" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="tbStatusBar" min="-2" pref="25" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -100,7 +100,7 @@
         <Component class="javax.swing.JLabel" name="lblStatus">
           <Properties>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="96" red="0" type="rgb"/>
+              <Color blue="2c" green="94" red="32" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Ready"/>
           </Properties>
