@@ -25,6 +25,7 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
   private Pcap pcap;
   private int userVal;
   private int numPackets;
+  Thread pcapThread;
 
   public MainFrame() {
     initComponents();
@@ -301,10 +302,10 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
     }//GEN-LAST:event_btnScanActionPerformed
 
     private void tbtnCaptureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnCaptureActionPerformed
-      this.userVal = Integer.parseInt(spinPacketNumber.getValue().toString());
-      this.numPackets = (userVal == 0) ? Pcap.LOOP_INFINITE : userVal;
-      this.tPCAP = new PacketCapture(userVal, numPackets, tbtnCapture, txtaLog, pcap, cboxDevice, alldevs, errbuf);
-      Thread pcapThread = new Thread(tPCAP);
+      userVal = Integer.parseInt(spinPacketNumber.getValue().toString());
+      numPackets = (userVal == 0) ? Pcap.LOOP_INFINITE : userVal;
+      tPCAP = new PacketCapture(userVal, numPackets, tbtnCapture, txtaLog, pcap, cboxDevice, alldevs, errbuf);
+      pcapThread = new Thread(tPCAP);
       pcapThread.start();
     }//GEN-LAST:event_tbtnCaptureActionPerformed
 
@@ -317,6 +318,7 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
       if (tPCAP != null) {
         tPCAP.setCapturing(tbtnCapture.isSelected());
       }
+      if (!tbtnCapture.isSelected() && pcapThread != null) pcapThread.interrupt();
     }//GEN-LAST:event_tbtnCaptureStateChanged
 
   private static String asString(final byte[] mac) {

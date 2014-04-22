@@ -51,22 +51,11 @@ public class PacketCapture implements Runnable, LogInterface {
 
   @Override
   public void run() {
-    while (isCapturing) {
-      appendLog(txtaLog, "\nBeginning Packet Capture ["
-          + ((userVal == 0) ? "Infinity" : userVal) + "]:\n\n");
-      int snaplen = 64 * 1024;           // Capture all packets, no trucation  
-      int flags = Pcap.MODE_PROMISCUOUS; // capture all packets  
-      int timeout = 10 * 1000;           // 10 seconds in millis    
-      pcap = Pcap.openLive(
-          alldevs.get(
-              cboxDevice.getSelectedIndex()).getName(), snaplen, flags, timeout, errbuf);
-
-      if (pcap == null) {
-        appendLog(txtaLog, "Error while opening device for capture: " + errbuf.toString() + "\n");
-        return;
-      }
-
-      PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>() {
+    int snaplen = 64 * 1024;           // Capture all packets, no trucation  
+    int flags = Pcap.MODE_PROMISCUOUS; // capture all packets  
+    int timeout = 10 * 1000;           // 10 seconds in millis 
+    
+    PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>() {
 
         Tcp tcp = new Tcp();
         Ip4 ipv4 = new Ip4();
@@ -75,26 +64,22 @@ public class PacketCapture implements Runnable, LogInterface {
 
         @Override
         public void nextPacket(final PcapPacket packet, final String user) {
-          if (!isCapturing) {
-            pcap.breakloop(); // Break the loop and exit
-          }
-
+          
+          String srcPort = "", destPort = "", sequence = "", srcIP = "", destIP = "";
+          
           if (packet.hasHeader(ipv4)) {
-            dIP = packet.getHeader(ipv4).destination();
-            sIP = packet.getHeader(ipv4).source();
+            destIP = org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).destination());
+            srcIP = org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source());
           }
           
           if (packet.hasHeader(tcp)) {
             packet.getHeader(tcp);
+            srcPort = String.valueOf(tcp.source());
+            destPort = String.valueOf(tcp.destination());
+            sequence = String.valueOf(tcp.seq());
           }
 
-          String srcIP = org.jnetpcap.packet.format.FormatUtils.ip(sIP);
-          String destIP = org.jnetpcap.packet.format.FormatUtils.ip(dIP);
           String date = dform.format(new Date(packet.getCaptureHeader().timestampInMillis()));
-          String srcPort = (tcp != null) ? ":" + String.valueOf(tcp.source()) : "";
-          String destPort = (tcp != null) ? ":" + String.valueOf(tcp.destination()) : "";
-          String sequence = (tcp != null) ? String.valueOf(tcp.seq()) : "-";
-
           appendLog(txtaLog, "#---| " + date
               + "\t" + srcIP + srcPort + "\t=====>\t" + destIP + destPort
 //              + "\tcaplen=" + packet.getCaptureHeader().caplen()
@@ -105,17 +90,26 @@ public class PacketCapture implements Runnable, LogInterface {
         }
       };
 
-      pcap.loop(numPackets, jpacketHandler, "IDS System");
-
-      appendLog(txtaLog, "\nCapture finished. Link to PCAP closed.\n");
-      isCapturing = false;
-      tbtnCapture.setSelected(false);
+    appendLog(txtaLog, "\nBeginning Packet Capture ["
+          + ((userVal == 0) ? "Infinity" : userVal) + "]:\n\n");
+    pcap = Pcap.openLive(alldevs.get(cboxDevice.getSelectedIndex()).getName(), snaplen, flags, timeout, errbuf);
+    if (pcap == null) {
+      appendLog(txtaLog, "Error while opening device for capture: " + errbuf.toString() + "\n");
+      return;
     }
+
+    pcap.loop(numPackets, jpacketHandler, "IDS System");
+    
+    while (!Thread.interrupted()) {
+    }
+    pcap.breakloop();
+    appendLog(txtaLog, "\nCapture finished. Link to PCAP closed.\n");
+    
     // Clean up after stop requested.
     try {
       pcap.close();
     } catch (Exception e) {
-      appendLog(txtaLog, "Link to PCAP won't close, trying again...\n");
+      appendLog(txtaLog, "Link to PCAP won't close, " + e.toString() + "\n");
     }
   }
 
@@ -125,7 +119,7 @@ public class PacketCapture implements Runnable, LogInterface {
 
   @Override
   public void appendLog(JTextArea log, String message) {
-    log.append(message);
-    log.setCaretPosition(log.getText().length());
+    txtaLog.append(message);
+    txtaLog.setCaretPosition(log.getText().length());
   }
 }
