@@ -6,12 +6,13 @@
 
 package cs492finalproject.Interfaces;
 
-import javax.swing.JTextArea;
+import java.awt.Color;
+import javax.swing.JTextPane;
 
 /**
  *
  * @author JBristol
  */
 public interface LogInterface {
-  public void appendLog(JTextArea log, String message);
+  public void appendLog(JTextPane log, String message, Color txtColor);
 }

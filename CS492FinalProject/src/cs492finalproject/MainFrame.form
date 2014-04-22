@@ -33,8 +33,10 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="CS 492 - Host-Based IDS System"/>
+    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[750, 500]"/>
+    </Property>
     <Property name="name" type="java.lang.String" value="frameMaine" noResource="true"/>
-    <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="mbarMain"/>
@@ -60,8 +62,8 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="tbStatusBar" alignment="1" pref="0" max="32767" attributes="0"/>
-                  <Component id="spLog" alignment="0" max="32767" attributes="0"/>
                   <Component id="tabpaneMain" alignment="0" max="32767" attributes="0"/>
+                  <Component id="spLog" alignment="1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -338,23 +340,17 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextArea" name="txtaLog">
+        <Component class="javax.swing.JTextPane" name="txtaLog">
           <Properties>
-            <Property name="editable" type="boolean" value="false"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="cc" red="cc" type="rgb"/>
             </Property>
-            <Property name="columns" type="int" value="20"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Monospaced" size="11" style="0"/>
+            </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="33" green="33" red="33" type="rgb"/>
             </Property>
-            <Property name="lineWrap" type="boolean" value="true"/>
-            <Property name="rows" type="int" value="5"/>
-            <Property name="wrapStyleWord" type="boolean" value="true"/>
-            <Property name="caret" type="javax.swing.text.Caret" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection component="txtaLog" name="getCaret" type="method"/>
-            </Property>
-            <Property name="doubleBuffered" type="boolean" value="true"/>
             <Property name="selectionColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="66" green="99" red="0" type="rgb"/>
             </Property>
