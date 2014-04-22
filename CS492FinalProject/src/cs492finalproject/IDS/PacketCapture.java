@@ -126,7 +126,7 @@ public class PacketCapture implements Runnable, LogInterface {
               + "\t" + offset
               + "\t" + flags
               + "\t" + checksum
-              + "\n", new Color(50, 148, 44));
+              + "\n", new Color(50, 148, 44));*/
         }
       };
 
