@@ -68,9 +68,11 @@ public class PacketCapture implements Runnable, LogInterface {
 
       PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>() {
 
+        // Initialize headers
         Tcp tcp = new Tcp();
         Ip4 ipv4 = new Ip4();
 
+        // Initialize strings
         String srcIP = "", destIP = "", srcPort = "", destPort = "", sequence = "";
 
         @Override
@@ -80,11 +82,12 @@ public class PacketCapture implements Runnable, LogInterface {
           }
 
           if (packet.hasHeader(ipv4)) {
-            // If it has an IPv4 header, lets build some strings
+            // If it has an IPv4 header, lets clone that and build some strings
+            packet.getHeader(ipv4);
             srcIP = org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source());
             destIP = org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).destination());
           }
-          
+
           if (packet.hasHeader(tcp)) {
             // If it has a TCP header, lets clone that and build some strings
             packet.getHeader(tcp);
@@ -93,6 +96,7 @@ public class PacketCapture implements Runnable, LogInterface {
             sequence = "seq=" + String.valueOf(tcp.seq());
           }
 
+          // Capture header strings
           String date = dform.format(new Date(packet.getCaptureHeader().timestampInMillis()));
 
           appendLog(txtaLog, "#---| " + date
@@ -105,6 +109,7 @@ public class PacketCapture implements Runnable, LogInterface {
       pcap.loop(numPackets, jpacketHandler, "IDS System");
 
       appendLog(txtaLog, "\nCapture finished. Link to PCAP closed.\n");
+      
       isCapturing = false; // Stop processing
       tbtnCapture.setSelected(false); // Reset button
     }
