@@ -51,7 +51,7 @@ public class PacketCapture implements Runnable, LogInterface {
 
   @Override
   public void run() {
-    while (isCapturing) {
+    while (isCapturing) { // Don't do anything unless isCapturing is true
       appendLog(txtaLog, "\nBeginning Packet Capture ["
           + ((userVal == 0) ? "Infinity" : userVal) + "]:\n\n");
       int snaplen = 64 * 1024;           // Capture all packets, no trucation  
@@ -80,11 +80,13 @@ public class PacketCapture implements Runnable, LogInterface {
           }
 
           if (packet.hasHeader(ipv4)) {
+            // If it has an IPv4 header, lets build some strings
             srcIP = org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source());
             destIP = org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).destination());
           }
           
           if (packet.hasHeader(tcp)) {
+            // If it has a TCP header, lets clone that and build some strings
             packet.getHeader(tcp);
             srcPort = ":" + String.valueOf(tcp.source());
             destPort = ":" + String.valueOf(tcp.destination());
@@ -95,9 +97,6 @@ public class PacketCapture implements Runnable, LogInterface {
 
           appendLog(txtaLog, "#---| " + date
               + "\t" + srcIP + srcPort + "\t=====>\t" + destIP + destPort
-//              + "\tcaplen=" + packet.getCaptureHeader().caplen()
-//              + "\tlen=" + packet.getCaptureHeader().wirelen()
-//              +"\tack=" + tcp.ack()
               + "\t" + sequence
               + "\n");
         }
@@ -109,16 +108,17 @@ public class PacketCapture implements Runnable, LogInterface {
       isCapturing = false; // Stop processing
       tbtnCapture.setSelected(false); // Reset button
     }
-    // Clean up after stop requested.
+    // Your here if isCapturing is false
+    // Clean up and destroy thread.
     try {
-      pcap.close();
-      Thread.currentThread().interrupt(); // Saftely destory the thread
+      pcap.close(); // Close the connection
+      Thread.currentThread().interrupt(); // Safely destroy the thread
     } catch (Exception e) {
       appendLog(txtaLog, "Link to PCAP closing, waiting for stray packets...\n");
     }
   }
 
-  public void setCapturing(boolean isCapturing) {
+  public synchronized void setCapturing(boolean isCapturing) {
     this.isCapturing = isCapturing;
   }
 
