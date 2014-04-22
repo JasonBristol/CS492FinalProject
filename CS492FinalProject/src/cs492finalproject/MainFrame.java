@@ -47,7 +47,7 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
     } catch (Exception e) {
       // Fail Silently
     }
-    log.setCaretPosition(0);
+    log.setCaretPosition(doc.getLength());
   }
 
   /**
