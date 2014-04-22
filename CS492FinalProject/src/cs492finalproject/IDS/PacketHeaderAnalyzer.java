@@ -51,7 +51,7 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
         }
       }
     }
-    appendLog(txtArea, "Terminating Analzyer Thread.", Color.BLACK);
+    appendLog(txtArea, "Terminating Analzyer Thread.", Color.DARK_GRAY);
   }
     private void SYNScan(PcapPacket packet) {
         Tcp tcp = new Tcp();
@@ -128,6 +128,6 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
     } catch (Exception e) {
       // Fail Silently
     }
-    log.setCaretPosition(0);
+    log.setCaretPosition(doc.getLength());
   }
 }

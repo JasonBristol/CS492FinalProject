@@ -52,7 +52,7 @@ public class PacketCapture implements Runnable, LogInterface {
     this.alldevs = alldevs;
     this.errbuf = errbuf;
     this.isCapturing = false;
-    
+
   }
 
   @Override
@@ -61,10 +61,10 @@ public class PacketCapture implements Runnable, LogInterface {
     PHA = new PacketHeaderAnalyzer(txtaLog);
     Thread analyzer = new Thread(PHA);
     analyzer.start();
-    
+
     while (isCapturing) { // Don't do anything unless isCapturing is true
       appendLog(txtaLog, "\nBeginning Packet Capture ["
-          + ((userVal == 0) ? "Infinity" : userVal) + "]:\n\n", Color.BLACK);
+          + ((userVal == 0) ? "Infinity" : userVal) + "]:\n\n", Color.DARK_GRAY);
       int snaplen = 64 * 1024;           // Capture all packets, no trucation  
       int flags = Pcap.MODE_PROMISCUOUS; // capture all packets  
       int timeout = 10 * 1000;           // 10 seconds in millis    
@@ -76,7 +76,7 @@ public class PacketCapture implements Runnable, LogInterface {
         appendLog(txtaLog, "Error while opening device for capture: " + errbuf.toString() + "\n", Color.RED);
         return;
       }
-      
+
       PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>() {
 
         // Initialize headers
@@ -92,10 +92,11 @@ public class PacketCapture implements Runnable, LogInterface {
           if (!isCapturing) {
             pcap.breakloop(); // Break the loop and exit
           }
-          
+
           // Add packet to Analzyer Thread
           PcapPacket clone = packet;
           PHA.addPacket(clone);
+
           if (packet.hasHeader(ipv4)) {
             // If it has an IPv4 header, lets clone that and build some strings
             packet.getHeader(ipv4);
@@ -125,14 +126,14 @@ public class PacketCapture implements Runnable, LogInterface {
               + "\t" + offset
               + "\t" + flags
               + "\t" + checksum
-              + "\n", new Color(0,200,55));*/
+              + "\n", new Color(50, 148, 44));
         }
       };
 
       pcap.loop(numPackets, jpacketHandler, "IDS System");
 
-      appendLog(txtaLog, "\nCapture finished. Link to PCAP closed.\n", Color.BLACK);
-      
+      appendLog(txtaLog, "\nCapture finished. Link to PCAP closed.\n", Color.DARK_GRAY);
+
       isCapturing = false; // Stop processing
       tbtnCapture.setSelected(false); // Reset button
       // Interrupt Analzyer Thread
@@ -144,7 +145,7 @@ public class PacketCapture implements Runnable, LogInterface {
       pcap.close(); // Close the connection
       Thread.currentThread().interrupt(); // Safely destroy the thread
     } catch (Exception e) {
-      appendLog(txtaLog, "Link to PCAP closing, waiting for stray packets...\n", Color.BLACK);
+      appendLog(txtaLog, "Link to PCAP closing, waiting for stray packets...\n", Color.DARK_GRAY);
     }
   }
 
@@ -166,6 +167,6 @@ public class PacketCapture implements Runnable, LogInterface {
     } catch (Exception e) {
       // Fail Silently
     }
-    log.setCaretPosition(0);
+    log.setCaretPosition(doc.getLength());
   }
 }
