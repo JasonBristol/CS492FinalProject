@@ -35,15 +35,22 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
         PcapPacket currentPacket = packets.removeFirst();
         if (currentPacket.hasHeader(tcp)) {
           checkTcpFlags(currentPacket);
+          checkHeaderSize(currentPacket);
         }
       }
+    }
+  }
+    private void checkHeaderSize(PcapPacket packet) {
+        Tcp tcp = new Tcp();
+        Ip4 ipv4 = new Ip4();
+        appendLog(txtArea, "Header Length " + packet.getHeader(tcp).getHeaderLength() + "\n") ;
     }
     
     private void checkTcpFlags(PcapPacket packet){
         Tcp tcp = new Tcp();
         Ip4 ipv4 = new Ip4();
         //WORK IN PROGRESS
-        
+
         // SYN and URG invalid
         if(packet.getHeader(tcp).flags_SYN() && packet.getHeader(tcp).flags_URG() ) {
             appendLog(txtArea, org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + " is Suspicious 001\n");
@@ -57,7 +64,7 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
             appendLog(txtArea, org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + " is Suspicious 003\n");
         }
     }
-  }
+
 
   public void addPacket(PcapPacket packet) {
     packets.add(packet);
