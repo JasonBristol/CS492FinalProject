@@ -51,6 +51,11 @@ public class PacketCapture implements Runnable, LogInterface {
 
   @Override
   public void run() {
+    // Create Analyzer Thread
+    final PacketHeaderAnalyzer PHA = new PacketHeaderAnalyzer((txtaLog));
+    Thread analyzer = new Thread(PHA);
+    analyzer.start();
+    
     while (isCapturing) { // Don't do anything unless isCapturing is true
       appendLog(txtaLog, "\nBeginning Packet Capture ["
           + ((userVal == 0) ? "Infinity" : userVal) + "]:\n\n");
@@ -65,7 +70,7 @@ public class PacketCapture implements Runnable, LogInterface {
         appendLog(txtaLog, "Error while opening device for capture: " + errbuf.toString() + "\n");
         return;
       }
-
+      
       PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>() {
 
         Tcp tcp = new Tcp();
@@ -78,7 +83,11 @@ public class PacketCapture implements Runnable, LogInterface {
           if (!isCapturing) {
             pcap.breakloop(); // Break the loop and exit
           }
-
+          
+          // Add packet to Analzyer Thread
+          PcapPacket clone = packet;
+          PHA.addPacket(clone);
+          
           if (packet.hasHeader(ipv4)) {
             // If it has an IPv4 header, lets build some strings
             srcIP = org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source());
@@ -107,6 +116,8 @@ public class PacketCapture implements Runnable, LogInterface {
       appendLog(txtaLog, "\nCapture finished. Link to PCAP closed.\n");
       isCapturing = false; // Stop processing
       tbtnCapture.setSelected(false); // Reset button
+      // Interrupt Analzyer Thread
+      analyzer.interrupt();
     }
     // Your here if isCapturing is false
     // Clean up and destroy thread.
