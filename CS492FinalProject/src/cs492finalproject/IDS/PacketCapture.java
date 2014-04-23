@@ -8,6 +8,7 @@ package cs492finalproject.IDS;
 import cs492finalproject.Interfaces.LogInterface;
 import java.awt.Color;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -129,12 +130,17 @@ public class PacketCapture implements Runnable, LogInterface {
             }
           }
 
+          try {
           if (packet.hasHeader(tcp) && packet.hasHeader(ipv4)) {
-//            if (srcIP.equals(inet.getHostAddress())) {
-//              direction = "=====>";
-//            } else {
-//              direction = "<=====";
-//            }
+            inet = InetAddress.getLocalHost();
+            if (srcIP.equals(inet.getHostAddress())) {
+              direction = "=====>";
+            } else {
+              direction = "<=====";
+            }
+          }
+          } catch (UnknownHostException e) {
+            appendLog(txtaLog, e.getMessage(), Color.RED);
           }
 
           // Capture header strings
