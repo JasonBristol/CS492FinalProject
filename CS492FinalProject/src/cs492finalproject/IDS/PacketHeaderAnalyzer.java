@@ -105,11 +105,8 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
       if ((total - (iACK + oACK)) != 0) {
         P2 = (double) oRST / (total - (iACK + oACK));
       }
-      System.out.println(P2 + "\t" + oRST + "\t" + (total - (iACK + oACK)));
-      P3 = iSYNnACK - ((iFIN > oFIN) ? iFIN : oFIN);
-      if (iFIN != 0) {
-        P4 = (double)iFIN/ oFIN;
-      }
+      P3 = (iSYNnACK + oSYNnACK) - ((iFIN > oFIN) ? iFIN : oFIN);
+      
       packetFields[0].setText(total + "");
       packetFields[1].setText(incoming + "");
       packetFields[2].setText(iSYNnACK + "");
@@ -123,7 +120,13 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
       packetFields[10].setText(P1 + "");
       packetFields[11].setText(P2 + "");
       packetFields[12].setText(P3 + "");
-      packetFields[13].setText(P4 + "");
+      
+      //Check For Anomalies
+      //  SYN SCAN
+      if(P2 > Double.parseDouble(packetFields[13].getText())) packetFields[15].setText("Possible TCP SYN Scan in progress.");
+      //  FIN SCAN
+      if(P2 > Double.parseDouble(packetFields[13].getText())) packetFields[15].setText("Possible TCP FIN Scan in progress.");
+      
      
     } catch (UnknownHostException ex) {
       Logger.getLogger(PacketHeaderAnalyzer.class.getName()).log(Level.SEVERE, null, ex);
