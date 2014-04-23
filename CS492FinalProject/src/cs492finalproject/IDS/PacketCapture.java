@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cs492finalproject.IDS;
 
 import cs492finalproject.Interfaces.LogInterface;
@@ -29,7 +24,7 @@ import org.jnetpcap.protocol.tcpip.Tcp;
 
 /**
  *
- * @author JGR
+ * @author JBristol
  */
 public class PacketCapture implements Runnable, LogInterface {
 
@@ -44,8 +39,8 @@ public class PacketCapture implements Runnable, LogInterface {
   private volatile boolean isCapturing;
   private final SimpleDateFormat dform = new SimpleDateFormat("MMM dd h:mm:ss a");
   private PacketHeaderAnalyzer PHA;
-  private ArrayList<Integer> ip_port_hashes;
-  private JTextField[] packetFields;
+  private final ArrayList<Integer> ip_port_hashes;
+  private final JTextField[] packetFields;
   private InetAddress inet;
 
   public PacketCapture(final int userVal, final int numPackets, JToggleButton tbtnCapture,

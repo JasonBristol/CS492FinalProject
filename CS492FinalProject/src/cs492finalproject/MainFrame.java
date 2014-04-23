@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -19,12 +20,12 @@ import org.jnetpcap.PcapIf;
 
 /**
  *
- * @author Jason
+ * @author JBristol
  */
 public class MainFrame extends javax.swing.JFrame implements LogInterface {
 
-  private List<PcapIf> alldevs = new ArrayList<PcapIf>(); // Will be filled with NICs  
-  private StringBuilder errbuf = new StringBuilder(); // For any error msgs
+  private final List<PcapIf> alldevs = new ArrayList<PcapIf>(); // Will be filled with NICs  
+  private final StringBuilder errbuf = new StringBuilder(); // For any error msgs
   private PacketCapture tPCAP;
   private Pcap pcap;
   private int userVal;
@@ -45,7 +46,7 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
       } else {
         log.getDocument().insertString(doc.getLength(), message, aset);
       }
-    } catch (Exception e) {
+    } catch (BadLocationException e) {
       // Fail Silently
     }
     log.setCaretPosition(doc.getLength());
@@ -415,6 +416,11 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
 
     txtFinN.setText("0.0");
     txtFinN.setToolTipText("");
+    txtFinN.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        txtFinNActionPerformed(evt);
+      }
+    });
 
     javax.swing.GroupLayout panelPHA_3Layout = new javax.swing.GroupLayout(panelPHA_3);
     panelPHA_3.setLayout(panelPHA_3Layout);
@@ -453,11 +459,6 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
     txtAlert.setHorizontalAlignment(javax.swing.JTextField.CENTER);
     txtAlert.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     txtAlert.setFocusable(false);
-    txtAlert.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        txtAlertActionPerformed(evt);
-      }
-    });
 
     javax.swing.GroupLayout panelPHALayout = new javax.swing.GroupLayout(panelPHA);
     panelPHA.setLayout(panelPHALayout);
@@ -583,7 +584,8 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
 
       this.userVal = Integer.parseInt(spinPacketNumber.getValue().toString());
       this.numPackets = (userVal == 0) ? Pcap.LOOP_INFINITE : userVal;
-      JTextField[] packetFields = {txtTotal, txtIncoming, txtSYN1, txtSYNACK1, txtFIN1, txtOutgoing, txtSYN2, txtSYNACK2, txtRST, txtFIN2, p1, p2, p3, txtSynN, txtFinN, txtAlert};
+      JTextField[] packetFields = {txtTotal, txtIncoming, txtSYN1, txtSYNACK1, txtFIN1, txtOutgoing, txtSYN2, txtSYNACK2, txtRST,
+        txtFIN2, p1, p2, p3, txtSynN, txtFinN, txtAlert};
       this.tPCAP = new PacketCapture(userVal, numPackets, tbtnCapture, txtaLog, pcap, cboxDevice, alldevs, errbuf, packetFields);
       Thread pcapThread = new Thread(tPCAP);
       pcapThread.start();
@@ -600,13 +602,13 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
       }
     }//GEN-LAST:event_tbtnCaptureStateChanged
 
-    private void txtSynNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSynNActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSynNActionPerformed
-
-  private void txtAlertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAlertActionPerformed
+  private void txtSynNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSynNActionPerformed
     // TODO add your handling code here:
-  }//GEN-LAST:event_txtAlertActionPerformed
+  }//GEN-LAST:event_txtSynNActionPerformed
+
+  private void txtFinNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFinNActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_txtFinNActionPerformed
 
   private static String asString(final byte[] mac) {
     final StringBuilder buf = new StringBuilder();

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cs492finalproject.IDS;
 
 import cs492finalproject.Interfaces.LogInterface;
@@ -14,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -23,14 +19,14 @@ import org.jnetpcap.protocol.tcpip.Tcp;
 
 /**
  *
- * @author JBristol
+ * @author JGR
  */
 public class PacketHeaderAnalyzer implements Runnable, LogInterface {
 
   private final LinkedList<PcapPacket> packets;
   private final JTextPane txtArea;
   private int total, incoming, outgoing, iSYNnACK, oSYNACK, oRST, iSYNACK, oSYNnACK, iFIN, oFIN, iACK, oACK;
-  private double P2, P4;
+  private double P2;
   private int P1, P3;
   JTextField[] packetFields;
 
@@ -52,7 +48,7 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
         ScanDetector(currentPacket);
       }
     }
-    appendLog(txtArea, "Terminating Analzyer Thread.", Color.DARK_GRAY);
+    appendLog(txtArea, "Terminating Analyzer Thread.", Color.DARK_GRAY);
   }
 
   private void ScanDetector(PcapPacket packet) {
@@ -82,8 +78,9 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
             oACK++;
           }
         }
+        
         if (org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).destination()).equals(IP.getHostAddress())) {
-          // check outgoing details
+          // check incoming details
           incoming++;
           if (!packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) {
             iSYNnACK++;
@@ -99,15 +96,19 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
           }
         }
       }
-      //appendLog(txtArea,"t:" + total + " i:" + incoming + " o:" + outgoing + " c1:" + iSYNnACK + " c2:" + oSYNACK + " c3:" + oRST + " c4:" + oSYNnACK + " c5:" + iSYNACK + " c6:" + oFIN + " c7:" + iFIN + " p1:" + P1 +  " p2:" + P2 + " p3:" + P3 + "\n", Color.black);
-      //update PHA Panel
+      
+//      appendLog(txtArea,"t:" + total + " i:" + incoming + " o:" + outgoing + " c1:" + iSYNnACK + " c2:" 
+//          + oSYNACK + " c3:" + oRST + " c4:" + oSYNnACK + " c5:" + iSYNACK + " c6:" + oFIN + " c7:" 
+//          + iFIN + " p1:" + P1 +  " p2:" + P2 + " p3:" + P3 + "\n", Color.black);
+      
+      //Update Anomaly Detection Panel
       P1 = iSYNnACK - oSYNACK;
       if ((total - (iACK + oACK)) != 0) {
         P2 = (double) oRST / (total - (iACK + oACK));
       }
-      
+
       P3 = (iSYNnACK + oSYNnACK) - ((iFIN > oFIN) ? iFIN : oFIN);
-      
+
       packetFields[0].setText(total + "");
       packetFields[1].setText(incoming + "");
       packetFields[2].setText(iSYNnACK + "");
@@ -121,13 +122,17 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
       packetFields[10].setText(P1 + "");
       packetFields[11].setText(P2 + "");
       packetFields[12].setText(P3 + "");
-      
+
       //Check For Anomalies
       //  SYN SCAN, 500 should be a ratio between a threshold and time the IDS has been active
-      if(P2 > Double.parseDouble(packetFields[13].getText()) && P3 > 500) packetFields[15].setText("Possible TCP SYN Scan in progress.");
+      if (P2 > Double.parseDouble(packetFields[13].getText()) && P3 > 500) {
+        packetFields[15].setText("Possible TCP SYN Scan in progress.");
+      }
       //  FIN SCAN, -500 should be a ratio between a threshold and time the IDS has been active
-      if(P2 > Double.parseDouble(packetFields[13].getText()) && P3 < -500) packetFields[15].setText("Possible TCP FIN Scan in progress."); 
-      
+      if (P2 > Double.parseDouble(packetFields[13].getText()) && P3 < -500) {
+        packetFields[15].setText("Possible TCP FIN Scan in progress.");
+      }
+
     } catch (UnknownHostException ex) {
       Logger.getLogger(PacketHeaderAnalyzer.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -148,8 +153,8 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
       } else {
         log.getDocument().insertString(doc.getLength(), message, aset);
       }
-    } catch (Exception e) {
-      // Fail Silently
+    } catch (BadLocationException e) {
+      // Fail silently
     }
     log.setCaretPosition(doc.getLength());
   }
