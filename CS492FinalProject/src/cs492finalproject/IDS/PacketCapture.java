@@ -173,6 +173,10 @@ public class PacketCapture implements Runnable, LogInterface {
   public synchronized void setCapturing(boolean isCapturing) {
     this.isCapturing = isCapturing;
   }
+  
+  public void reset() {
+    PHA.reset();
+  }
 
   @Override
   public void appendLog(JTextPane log, String message, Color txtColor) {

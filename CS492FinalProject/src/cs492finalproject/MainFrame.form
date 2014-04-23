@@ -315,58 +315,58 @@
                           <EmptySpace pref="20" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="lblTotal" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="txtTotal" min="-2" pref="52" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="btnReset" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="lblIncoming" max="32767" attributes="0"/>
-                                              <Component id="txtIncoming" min="-2" pref="52" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="lblSYN1" max="32767" attributes="0"/>
-                                              <Component id="txtSYN1" min="-2" pref="52" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="lblSYNACK1" max="32767" attributes="0"/>
-                                              <Component id="txtSYNACK1" min="-2" pref="52" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace max="32767" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="lblFIN1" max="32767" attributes="0"/>
-                                              <Component id="txtFIN1" min="-2" pref="52" max="-2" attributes="0"/>
-                                          </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="lblIncoming" max="32767" attributes="0"/>
+                                          <Component id="txtIncoming" min="-2" pref="52" max="-2" attributes="0"/>
                                       </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="lblOutgoing" max="32767" attributes="0"/>
-                                              <Component id="txtOutgoing" min="-2" pref="52" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="lblSYN2" max="32767" attributes="0"/>
-                                              <Component id="txtSYN2" min="-2" pref="52" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="lblSYNACK2" max="32767" attributes="0"/>
-                                              <Component id="txtSYNACK2" min="-2" pref="52" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="lblRST" max="32767" attributes="0"/>
-                                              <Component id="txtRST" min="-2" pref="52" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="lblFIN2" max="32767" attributes="0"/>
-                                              <Component id="txtFIN2" min="-2" pref="52" max="-2" attributes="0"/>
-                                          </Group>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="lblSYN1" max="32767" attributes="0"/>
+                                          <Component id="txtSYN1" min="-2" pref="52" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="lblSYNACK1" max="32767" attributes="0"/>
+                                          <Component id="txtSYNACK1" min="-2" pref="52" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="lblFIN1" max="32767" attributes="0"/>
+                                          <Component id="txtFIN1" min="-2" pref="52" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="lblOutgoing" max="32767" attributes="0"/>
+                                          <Component id="txtOutgoing" min="-2" pref="52" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="lblSYN2" max="32767" attributes="0"/>
+                                          <Component id="txtSYN2" min="-2" pref="52" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="lblSYNACK2" max="32767" attributes="0"/>
+                                          <Component id="txtSYNACK2" min="-2" pref="52" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="lblRST" max="32767" attributes="0"/>
+                                          <Component id="txtRST" min="-2" pref="52" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="lblFIN2" max="32767" attributes="0"/>
+                                          <Component id="txtFIN2" min="-2" pref="52" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -408,9 +408,17 @@
                               <Component id="txtFIN2" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lblTotal" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="7" max="32767" attributes="0"/>
-                          <Component id="txtTotal" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="lblTotal" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="7" max="32767" attributes="0"/>
+                                  <Component id="txtTotal" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <Component id="btnReset" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -526,6 +534,14 @@
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="btnReset">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Reset"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnResetActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -667,9 +683,6 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="0.0"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSynNActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblFIN_s_n">
                   <Properties>
@@ -681,9 +694,6 @@
                     <Property name="text" type="java.lang.String" value="0.0"/>
                     <Property name="toolTipText" type="java.lang.String" value=""/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFinNActionPerformed"/>
-                  </Events>
                 </Component>
               </SubComponents>
             </Container>

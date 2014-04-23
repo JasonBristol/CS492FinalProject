@@ -141,6 +141,24 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
   public void addPacket(PcapPacket packet) {
     packets.add(packet);
   }
+  
+  public void reset() {
+    P1 = 0;
+    P2 = 0;
+    P3 = 0;
+    iACK = 0;
+    iFIN = 0;
+    iSYNACK = 0;
+    iSYNnACK = 0;
+    incoming = 0;
+    oACK = 0;
+    oFIN = 0;
+    oRST = 0;
+    oSYNACK = 0;
+    oSYNnACK = 0;
+    outgoing = 0;
+    total = 0;
+  }
 
   @Override
   public void appendLog(JTextPane log, String message, Color txtColor) {

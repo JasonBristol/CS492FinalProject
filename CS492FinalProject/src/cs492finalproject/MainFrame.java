@@ -96,6 +96,7 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
     txtFIN2 = new javax.swing.JTextField();
     lblTotal = new javax.swing.JLabel();
     txtTotal = new javax.swing.JTextField();
+    btnReset = new javax.swing.JButton();
     panelPHA_1 = new javax.swing.JPanel();
     lblSYN_oSYNACK = new javax.swing.JLabel();
     p1 = new javax.swing.JTextField();
@@ -262,6 +263,13 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
     txtTotal.setEditable(false);
     txtTotal.setFocusable(false);
 
+    btnReset.setText("Reset");
+    btnReset.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnResetActionPerformed(evt);
+      }
+    });
+
     javax.swing.GroupLayout panelPHA_2Layout = new javax.swing.GroupLayout(panelPHA_2);
     panelPHA_2.setLayout(panelPHA_2Layout);
     panelPHA_2Layout.setHorizontalGroup(
@@ -270,47 +278,48 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
         .addContainerGap(20, Short.MAX_VALUE)
         .addGroup(panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(lblTotal)
-          .addGroup(panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
             .addGroup(panelPHA_2Layout.createSequentialGroup()
               .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addComponent(btnReset)
               .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-              .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPHA_2Layout.createSequentialGroup()
-                .addGroup(panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                  .addComponent(lblIncoming, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addComponent(txtIncoming, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                  .addComponent(lblSYN1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addComponent(txtSYN1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                  .addComponent(lblSYNACK1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addComponent(txtSYNACK1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                  .addComponent(lblFIN1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addComponent(txtFIN1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
-              .addGroup(panelPHA_2Layout.createSequentialGroup()
-                .addGroup(panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                  .addComponent(lblOutgoing, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addComponent(txtOutgoing, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                  .addComponent(lblSYN2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addComponent(txtSYN2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                  .addComponent(lblSYNACK2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addComponent(txtSYNACK2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                  .addComponent(lblRST, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addComponent(txtRST, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                  .addComponent(lblFIN2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addComponent(txtFIN2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPHA_2Layout.createSequentialGroup()
+              .addGroup(panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(lblIncoming, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtIncoming, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+              .addGap(18, 18, 18)
+              .addGroup(panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(lblSYN1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtSYN1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+              .addGap(18, 18, 18)
+              .addGroup(panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(lblSYNACK1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtSYNACK1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addGroup(panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(lblFIN1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtFIN1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(panelPHA_2Layout.createSequentialGroup()
+              .addGroup(panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(lblOutgoing, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtOutgoing, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+              .addGap(18, 18, 18)
+              .addGroup(panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(lblSYN2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtSYN2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+              .addGap(18, 18, 18)
+              .addGroup(panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(lblSYNACK2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtSYNACK2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+              .addGap(18, 18, 18)
+              .addGroup(panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(lblRST, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtRST, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+              .addGap(18, 18, 18)
+              .addGroup(panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(lblFIN2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtFIN2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))))))
     );
     panelPHA_2Layout.setVerticalGroup(
       panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -342,9 +351,14 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
           .addComponent(txtRST, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(txtFIN2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(lblTotal)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-        .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGroup(panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(panelPHA_2Layout.createSequentialGroup()
+            .addComponent(lblTotal)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+            .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(panelPHA_2Layout.createSequentialGroup()
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(btnReset)))
         .addContainerGap())
     );
 
@@ -405,21 +419,11 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
     lblSYN_s_n.setText("SYN Scan Normal:");
 
     txtSynN.setText("0.0");
-    txtSynN.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        txtSynNActionPerformed(evt);
-      }
-    });
 
     lblFIN_s_n.setText("FIN Scan Normal:");
 
     txtFinN.setText("0.0");
     txtFinN.setToolTipText("");
-    txtFinN.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        txtFinNActionPerformed(evt);
-      }
-    });
 
     javax.swing.GroupLayout panelPHA_3Layout = new javax.swing.GroupLayout(panelPHA_3);
     panelPHA_3.setLayout(panelPHA_3Layout);
@@ -597,13 +601,9 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
       }
     }//GEN-LAST:event_tbtnCaptureStateChanged
 
-  private void txtSynNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSynNActionPerformed
-    // TODO add your handling code here:
-  }//GEN-LAST:event_txtSynNActionPerformed
-
-  private void txtFinNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFinNActionPerformed
-    // TODO add your handling code here:
-  }//GEN-LAST:event_txtFinNActionPerformed
+  private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+    tPCAP.reset();
+  }//GEN-LAST:event_btnResetActionPerformed
 
   private static String asString(final byte[] mac) {
     final StringBuilder buf = new StringBuilder();
@@ -662,6 +662,7 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
   }
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JButton btnReset;
   private javax.swing.JButton btnScan;
   private javax.swing.JComboBox cboxDevice;
   private javax.swing.Box.Filler filler1;
