@@ -171,7 +171,7 @@
                           <Group type="102" attributes="0">
                               <Component id="lblDevice" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="cboxDevice" pref="566" max="32767" attributes="0"/>
+                              <Component id="cboxDevice" pref="558" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnScan" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -265,8 +265,8 @@
         <Container class="javax.swing.JPanel" name="panelPHA">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="PHA">
-                <Property name="tabTitle" type="java.lang.String" value="PHA"/>
+              <JTabbedPaneConstraints tabName="Anomaly Detection">
+                <Property name="tabTitle" type="java.lang.String" value="Anomaly Detection"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -640,7 +640,7 @@
                                   <Component id="txtFinN" min="-2" pref="80" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="18" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
