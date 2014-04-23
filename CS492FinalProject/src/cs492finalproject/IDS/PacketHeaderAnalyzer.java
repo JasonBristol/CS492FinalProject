@@ -44,7 +44,7 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
     Ip4 ipv4 = new Ip4();
     PcapPacket currentPacket = null;
     while (!Thread.interrupted()) {
-      if (!packets.isEmpty()) currentPacket = packets.removeFirst();
+      if (packets.peekFirst() != null) currentPacket = packets.removeFirst();
       if (currentPacket != null) ScanDetector(currentPacket);
       
     }
