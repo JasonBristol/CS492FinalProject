@@ -25,7 +25,8 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
 
   private final LinkedList<PcapPacket> packets;
   private final JTextPane txtArea;
-  private int total, incoming, outgoing, iSYNnACK, oSYNACK, oRST, iSYNACK, oSYNnACK, iFIN, oFIN, iACK, oACK;
+  private int total, incoming, outgoing, iSYNnACK, oSYNACK, oRST,
+      iSYNACK, oSYNnACK, iFIN, oFIN, iACK, oACK;
   private double P2;
   private int P1, P3;
   JTextField[] packetFields;
@@ -97,9 +98,9 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
         }
       }
 
-      appendLog(txtArea, "t:" + total + " i:" + incoming + " o:" + outgoing + " c1:" + iSYNnACK + " c2:"
-          + oSYNACK + " c3:" + oRST + " c4:" + oSYNnACK + " c5:" + iSYNACK + " c6:" + oFIN + " c7:"
-          + iFIN + " p1:" + P1 + " p2:" + P2 + " p3:" + P3 + "\n", Color.black);
+//      appendLog(txtArea, "t:" + total + " i:" + incoming + " o:" + outgoing + " c1:" + iSYNnACK + " c2:"
+//          + oSYNACK + " c3:" + oRST + " c4:" + oSYNnACK + " c5:" + iSYNACK + " c6:" + oFIN + " c7:"
+//          + iFIN + " p1:" + P1 + " p2:" + P2 + " p3:" + P3 + "\n", Color.black);
 
       //Update Anomaly Detection Panel
       P1 = iSYNnACK - oSYNACK;

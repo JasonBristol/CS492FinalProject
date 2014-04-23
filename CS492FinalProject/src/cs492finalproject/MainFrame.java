@@ -114,7 +114,6 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
     mbarMain = new javax.swing.JMenuBar();
     menuFile = new javax.swing.JMenu();
     menuItemExit = new javax.swing.JMenuItem();
-    menuEdit = new javax.swing.JMenu();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("CS 492 - Host-Based Intrusion Detection System");
@@ -454,7 +453,6 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
     );
 
     txtAlert.setEditable(false);
-    txtAlert.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
     txtAlert.setForeground(new java.awt.Color(255, 0, 0));
     txtAlert.setHorizontalAlignment(javax.swing.JTextField.CENTER);
     txtAlert.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -513,9 +511,6 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
     menuFile.add(menuItemExit);
 
     mbarMain.add(menuFile);
-
-    menuEdit.setText("Edit");
-    mbarMain.add(menuEdit);
 
     setJMenuBar(mbarMain);
 
@@ -690,7 +685,6 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
   private javax.swing.JLabel lblStatus;
   private javax.swing.JLabel lblTotal;
   private javax.swing.JMenuBar mbarMain;
-  private javax.swing.JMenu menuEdit;
   private javax.swing.JMenu menuFile;
   private javax.swing.JMenuItem menuItemExit;
   private javax.swing.JTextField p1;
