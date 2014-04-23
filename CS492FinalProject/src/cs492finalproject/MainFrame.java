@@ -60,66 +60,65 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-    tbStatusBar = new javax.swing.JToolBar();
-    lblStatus = new javax.swing.JLabel();
-    filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
-    pbarProgress = new javax.swing.JProgressBar();
-    filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(10, 32767));
-    tabpaneMain = new javax.swing.JTabbedPane();
-    panelCapturing = new javax.swing.JPanel();
-    lblDevice = new javax.swing.JLabel();
-    cboxDevice = new javax.swing.JComboBox();
-    btnScan = new javax.swing.JButton();
-    lblPacketNumber = new javax.swing.JLabel();
-    spinPacketNumber = new javax.swing.JSpinner();
-    tbtnCapture = new javax.swing.JToggleButton();
-    panelPHA = new javax.swing.JPanel();
-    panelPHA_2 = new javax.swing.JPanel();
-    txtOutgoing = new javax.swing.JTextField();
-    lblOutgoing = new javax.swing.JLabel();
-    txtSYN2 = new javax.swing.JTextField();
-    lblSYN2 = new javax.swing.JLabel();
-    txtIncoming = new javax.swing.JTextField();
-    lblIncoming = new javax.swing.JLabel();
-    lblSYN1 = new javax.swing.JLabel();
-    txtSYN1 = new javax.swing.JTextField();
-    lblSYNACK2 = new javax.swing.JLabel();
-    txtSYNACK2 = new javax.swing.JTextField();
-    lblRST = new javax.swing.JLabel();
-    txtRST = new javax.swing.JTextField();
-    lblSYNACK1 = new javax.swing.JLabel();
-    txtSYNACK1 = new javax.swing.JTextField();
-    lblFIN1 = new javax.swing.JLabel();
-    txtFIN1 = new javax.swing.JTextField();
-    lblFIN2 = new javax.swing.JLabel();
-    txtFIN2 = new javax.swing.JTextField();
-    lblTotal = new javax.swing.JLabel();
-    txtTotal = new javax.swing.JTextField();
-    panelPHA_1 = new javax.swing.JPanel();
-    lblSYN_oSYNACK = new javax.swing.JLabel();
-    p1 = new javax.swing.JTextField();
-    lblRST_total_ack = new javax.swing.JLabel();
-    p2 = new javax.swing.JTextField();
-    lblSYN_max = new javax.swing.JLabel();
-    p3 = new javax.swing.JTextField();
-    lblFinDif = new javax.swing.JLabel();
-    p4 = new javax.swing.JTextField();
-    panelPHA_3 = new javax.swing.JPanel();
-    lblSYN_s_n = new javax.swing.JLabel();
-    txtSYN_s_n = new javax.swing.JTextField();
-    lblFIN_s_n = new javax.swing.JLabel();
-    txtFST_s_n = new javax.swing.JTextField();
-    spLog = new javax.swing.JScrollPane();
-    txtaLog = new javax.swing.JTextPane();
-    mbarMain = new javax.swing.JMenuBar();
-    menuFile = new javax.swing.JMenu();
-    menuItemExit = new javax.swing.JMenuItem();
-    menuEdit = new javax.swing.JMenu();
+        tbStatusBar = new javax.swing.JToolBar();
+        lblStatus = new javax.swing.JLabel();
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
+        pbarProgress = new javax.swing.JProgressBar();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(10, 32767));
+        tabpaneMain = new javax.swing.JTabbedPane();
+        panelCapturing = new javax.swing.JPanel();
+        lblDevice = new javax.swing.JLabel();
+        cboxDevice = new javax.swing.JComboBox();
+        btnScan = new javax.swing.JButton();
+        lblPacketNumber = new javax.swing.JLabel();
+        spinPacketNumber = new javax.swing.JSpinner();
+        tbtnCapture = new javax.swing.JToggleButton();
+        panelPHA = new javax.swing.JPanel();
+        panelPHA_2 = new javax.swing.JPanel();
+        txtOutgoing = new javax.swing.JTextField();
+        lblOutgoing = new javax.swing.JLabel();
+        txtSYN2 = new javax.swing.JTextField();
+        lblSYN2 = new javax.swing.JLabel();
+        txtIncoming = new javax.swing.JTextField();
+        lblIncoming = new javax.swing.JLabel();
+        lblSYN1 = new javax.swing.JLabel();
+        txtSYN1 = new javax.swing.JTextField();
+        lblSYNACK2 = new javax.swing.JLabel();
+        txtSYNACK2 = new javax.swing.JTextField();
+        lblRST = new javax.swing.JLabel();
+        txtRST = new javax.swing.JTextField();
+        lblSYNACK1 = new javax.swing.JLabel();
+        txtSYNACK1 = new javax.swing.JTextField();
+        lblFIN1 = new javax.swing.JLabel();
+        txtFIN1 = new javax.swing.JTextField();
+        lblFIN2 = new javax.swing.JLabel();
+        txtFIN2 = new javax.swing.JTextField();
+        lblTotal = new javax.swing.JLabel();
+        txtTotal = new javax.swing.JTextField();
+        panelPHA_1 = new javax.swing.JPanel();
+        lblSYN_oSYNACK = new javax.swing.JLabel();
+        p1 = new javax.swing.JTextField();
+        lblRST_total_ack = new javax.swing.JLabel();
+        p2 = new javax.swing.JTextField();
+        lblSYN_max = new javax.swing.JLabel();
+        p3 = new javax.swing.JTextField();
+        panelPHA_3 = new javax.swing.JPanel();
+        lblSYN_s_n = new javax.swing.JLabel();
+        txtSynN = new javax.swing.JTextField();
+        lblFIN_s_n = new javax.swing.JLabel();
+        txtFinN = new javax.swing.JTextField();
+        txtAlert = new javax.swing.JTextField();
+        spLog = new javax.swing.JScrollPane();
+        txtaLog = new javax.swing.JTextPane();
+        mbarMain = new javax.swing.JMenuBar();
+        menuFile = new javax.swing.JMenu();
+        menuItemExit = new javax.swing.JMenuItem();
+        menuEdit = new javax.swing.JMenu();
 
-    setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-    setTitle("CS 492 - Host-Based Intrusion Detection System");
-    setMinimumSize(new java.awt.Dimension(750, 500));
-    setName("frameMaine"); // NOI18N
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("CS 492 - Host-Based Intrusion Detection System");
+        setMinimumSize(new java.awt.Dimension(750, 500));
+        setName("frameMaine"); // NOI18N
 
         tbStatusBar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         tbStatusBar.setFloatable(false);
@@ -171,30 +170,47 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
             }
         });
 
-    javax.swing.GroupLayout panelCapturingLayout = new javax.swing.GroupLayout(panelCapturing);
-    panelCapturing.setLayout(panelCapturingLayout);
-    panelCapturingLayout.setHorizontalGroup(
-      panelCapturingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(panelCapturingLayout.createSequentialGroup()
-        .addContainerGap()
-        .addGroup(panelCapturingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(panelCapturingLayout.createSequentialGroup()
-            .addComponent(lblDevice)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(cboxDevice, 0, 566, Short.MAX_VALUE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(btnScan))
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCapturingLayout.createSequentialGroup()
-            .addGap(0, 0, Short.MAX_VALUE)
-            .addGroup(panelCapturingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCapturingLayout.createSequentialGroup()
-                .addComponent(lblPacketNumber)
+        javax.swing.GroupLayout panelCapturingLayout = new javax.swing.GroupLayout(panelCapturing);
+        panelCapturing.setLayout(panelCapturingLayout);
+        panelCapturingLayout.setHorizontalGroup(
+            panelCapturingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCapturingLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelCapturingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelCapturingLayout.createSequentialGroup()
+                        .addComponent(lblDevice)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cboxDevice, 0, 566, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnScan))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCapturingLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(panelCapturingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCapturingLayout.createSequentialGroup()
+                                .addComponent(lblPacketNumber)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spinPacketNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tbtnCapture, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
+        );
+        panelCapturingLayout.setVerticalGroup(
+            panelCapturingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCapturingLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelCapturingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cboxDevice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDevice)
+                    .addComponent(btnScan))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
+                .addGroup(panelCapturingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(spinPacketNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPacketNumber))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tbtnCapture, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-    tabpaneMain.addTab("Packet Capturing", panelCapturing);
+        tabpaneMain.addTab("Packet Capturing", panelCapturing);
 
         txtOutgoing.setEditable(false);
         txtOutgoing.setFocusable(false);
@@ -251,7 +267,7 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
         panelPHA_2Layout.setHorizontalGroup(
             panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPHA_2Layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+                .addContainerGap(16, Short.MAX_VALUE)
                 .addGroup(panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTotal)
                     .addGroup(panelPHA_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -434,7 +450,11 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
         );
 
         txtAlert.setEditable(false);
-        txtAlert.setForeground(new java.awt.Color(255, 0, 0));
+        txtAlert.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAlertActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelPHALayout = new javax.swing.GroupLayout(panelPHA);
         panelPHA.setLayout(panelPHALayout);
@@ -442,13 +462,13 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
             panelPHALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPHALayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelPHALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelPHALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelPHALayout.createSequentialGroup()
                         .addComponent(panelPHA_1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(panelPHA_3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtAlert))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(txtAlert, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(panelPHA_2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -582,6 +602,10 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSynNActionPerformed
 
+    private void txtAlertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAlertActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtAlertActionPerformed
+
   private static String asString(final byte[] mac) {
     final StringBuilder buf = new StringBuilder();
     for (byte b : mac) {
@@ -638,61 +662,60 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
     });
   }
 
-  // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JButton btnScan;
-  private javax.swing.JComboBox cboxDevice;
-  private javax.swing.Box.Filler filler1;
-  private javax.swing.Box.Filler filler2;
-  private javax.swing.JLabel lblDevice;
-  private javax.swing.JLabel lblFIN1;
-  private javax.swing.JLabel lblFIN2;
-  private javax.swing.JLabel lblFIN_s_n;
-  private javax.swing.JLabel lblFinDif;
-  private javax.swing.JLabel lblIncoming;
-  private javax.swing.JLabel lblOutgoing;
-  private javax.swing.JLabel lblPacketNumber;
-  private javax.swing.JLabel lblRST;
-  private javax.swing.JLabel lblRST_total_ack;
-  private javax.swing.JLabel lblSYN1;
-  private javax.swing.JLabel lblSYN2;
-  private javax.swing.JLabel lblSYNACK1;
-  private javax.swing.JLabel lblSYNACK2;
-  private javax.swing.JLabel lblSYN_max;
-  private javax.swing.JLabel lblSYN_oSYNACK;
-  private javax.swing.JLabel lblSYN_s_n;
-  private javax.swing.JLabel lblStatus;
-  private javax.swing.JLabel lblTotal;
-  private javax.swing.JMenuBar mbarMain;
-  private javax.swing.JMenu menuEdit;
-  private javax.swing.JMenu menuFile;
-  private javax.swing.JMenuItem menuItemExit;
-  private javax.swing.JTextField p1;
-  private javax.swing.JTextField p2;
-  private javax.swing.JTextField p3;
-  private javax.swing.JTextField p4;
-  private javax.swing.JPanel panelCapturing;
-  private javax.swing.JPanel panelPHA;
-  private javax.swing.JPanel panelPHA_1;
-  private javax.swing.JPanel panelPHA_2;
-  private javax.swing.JPanel panelPHA_3;
-  private javax.swing.JProgressBar pbarProgress;
-  private javax.swing.JScrollPane spLog;
-  private javax.swing.JSpinner spinPacketNumber;
-  private javax.swing.JTabbedPane tabpaneMain;
-  private javax.swing.JToolBar tbStatusBar;
-  private javax.swing.JToggleButton tbtnCapture;
-  private javax.swing.JTextField txtFIN1;
-  private javax.swing.JTextField txtFIN2;
-  private javax.swing.JTextField txtFST_s_n;
-  private javax.swing.JTextField txtIncoming;
-  private javax.swing.JTextField txtOutgoing;
-  private javax.swing.JTextField txtRST;
-  private javax.swing.JTextField txtSYN1;
-  private javax.swing.JTextField txtSYN2;
-  private javax.swing.JTextField txtSYNACK1;
-  private javax.swing.JTextField txtSYNACK2;
-  private javax.swing.JTextField txtSYN_s_n;
-  private javax.swing.JTextField txtTotal;
-  private javax.swing.JTextPane txtaLog;
-  // End of variables declaration//GEN-END:variables
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnScan;
+    private javax.swing.JComboBox cboxDevice;
+    private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler2;
+    private javax.swing.JLabel lblDevice;
+    private javax.swing.JLabel lblFIN1;
+    private javax.swing.JLabel lblFIN2;
+    private javax.swing.JLabel lblFIN_s_n;
+    private javax.swing.JLabel lblIncoming;
+    private javax.swing.JLabel lblOutgoing;
+    private javax.swing.JLabel lblPacketNumber;
+    private javax.swing.JLabel lblRST;
+    private javax.swing.JLabel lblRST_total_ack;
+    private javax.swing.JLabel lblSYN1;
+    private javax.swing.JLabel lblSYN2;
+    private javax.swing.JLabel lblSYNACK1;
+    private javax.swing.JLabel lblSYNACK2;
+    private javax.swing.JLabel lblSYN_max;
+    private javax.swing.JLabel lblSYN_oSYNACK;
+    private javax.swing.JLabel lblSYN_s_n;
+    private javax.swing.JLabel lblStatus;
+    private javax.swing.JLabel lblTotal;
+    private javax.swing.JMenuBar mbarMain;
+    private javax.swing.JMenu menuEdit;
+    private javax.swing.JMenu menuFile;
+    private javax.swing.JMenuItem menuItemExit;
+    private javax.swing.JTextField p1;
+    private javax.swing.JTextField p2;
+    private javax.swing.JTextField p3;
+    private javax.swing.JPanel panelCapturing;
+    private javax.swing.JPanel panelPHA;
+    private javax.swing.JPanel panelPHA_1;
+    private javax.swing.JPanel panelPHA_2;
+    private javax.swing.JPanel panelPHA_3;
+    private javax.swing.JProgressBar pbarProgress;
+    private javax.swing.JScrollPane spLog;
+    private javax.swing.JSpinner spinPacketNumber;
+    private javax.swing.JTabbedPane tabpaneMain;
+    private javax.swing.JToolBar tbStatusBar;
+    private javax.swing.JToggleButton tbtnCapture;
+    private javax.swing.JTextField txtAlert;
+    private javax.swing.JTextField txtFIN1;
+    private javax.swing.JTextField txtFIN2;
+    private javax.swing.JTextField txtFinN;
+    private javax.swing.JTextField txtIncoming;
+    private javax.swing.JTextField txtOutgoing;
+    private javax.swing.JTextField txtRST;
+    private javax.swing.JTextField txtSYN1;
+    private javax.swing.JTextField txtSYN2;
+    private javax.swing.JTextField txtSYNACK1;
+    private javax.swing.JTextField txtSYNACK2;
+    private javax.swing.JTextField txtSynN;
+    private javax.swing.JTextField txtTotal;
+    private javax.swing.JTextPane txtaLog;
+    // End of variables declaration//GEN-END:variables
 }
