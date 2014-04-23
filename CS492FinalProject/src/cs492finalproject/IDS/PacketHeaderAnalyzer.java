@@ -36,7 +36,7 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
 
   public PacketHeaderAnalyzer(JTextPane txtArea, JTextField[] packetFields) {
     this.txtArea = txtArea;
-    packets = new LinkedList<PcapPacket>();
+    this.packets = new LinkedList<PcapPacket>();
     this.packetFields = packetFields;
 
   }
@@ -105,6 +105,7 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
       if ((total - (iACK + oACK)) != 0) {
         P2 = (double) oRST / (total - (iACK + oACK));
       }
+      
       P3 = (iSYNnACK + oSYNnACK) - ((iFIN > oFIN) ? iFIN : oFIN);
       
       packetFields[0].setText(total + "");
@@ -127,7 +128,6 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
       //  FIN SCAN
       if(P2 > Double.parseDouble(packetFields[13].getText())) packetFields[15].setText("Possible TCP FIN Scan in progress.");
       
-     
     } catch (UnknownHostException ex) {
       Logger.getLogger(PacketHeaderAnalyzer.class.getName()).log(Level.SEVERE, null, ex);
     }
