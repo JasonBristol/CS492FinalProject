@@ -123,10 +123,10 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
       packetFields[12].setText(P3 + "");
       
       //Check For Anomalies
-      //  SYN SCAN
-      if(P2 > Double.parseDouble(packetFields[13].getText())) packetFields[15].setText("Possible TCP SYN Scan in progress.");
-      //  FIN SCAN
-      if(P2 > Double.parseDouble(packetFields[13].getText())) packetFields[15].setText("Possible TCP FIN Scan in progress.");
+      //  SYN SCAN, 500 should be a ratio between a threshold and time the IDS has been active
+      if(P2 > Double.parseDouble(packetFields[13].getText()) && P3 > 500) packetFields[15].setText("Possible TCP SYN Scan in progress.");
+      //  FIN SCAN, -500 should be a ratio between a threshold and time the IDS has been active
+      if(P2 > Double.parseDouble(packetFields[13].getText()) && P3 < -500) packetFields[15].setText("Possible TCP FIN Scan in progress."); 
       
     } catch (UnknownHostException ex) {
       Logger.getLogger(PacketHeaderAnalyzer.class.getName()).log(Level.SEVERE, null, ex);
