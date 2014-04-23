@@ -31,10 +31,12 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
   private int total, incoming, outgoing, iSYNnACK, oSYNACK, oRST, iSYNACK, oSYNnACK, iFIN, oFIN;
   private double P2;
   private int P1, P3;
+  JTextPane[] packetPanes;
 
-  public PacketHeaderAnalyzer(JTextPane txtArea) {
+  public PacketHeaderAnalyzer(JTextPane txtArea, JTextPane[] packetPanes) {
     this.txtArea = txtArea;
     packets = new LinkedList<PcapPacket>();
+    this.packetPanes = packetPanes;
 
   }
 

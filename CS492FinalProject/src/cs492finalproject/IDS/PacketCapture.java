@@ -62,7 +62,7 @@ public class PacketCapture implements Runnable, LogInterface {
   @Override
   public void run() {
     // Create Analyzer Thread
-    PHA = new PacketHeaderAnalyzer(txtaLog);
+    PHA = new PacketHeaderAnalyzer(txtaLog, packetPanes);
     Thread analyzer = new Thread(PHA);
     analyzer.start();
 
