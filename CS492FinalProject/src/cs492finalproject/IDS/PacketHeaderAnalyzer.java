@@ -42,12 +42,11 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
   public void run() {
     Tcp tcp = new Tcp();
     Ip4 ipv4 = new Ip4();
-    PcapPacket currentPacket;
+    PcapPacket currentPacket = null;
     while (!Thread.interrupted()) {
-      if (!packets.isEmpty()) {
-        currentPacket = packets.removeFirst();
-        ScanDetector(currentPacket);
-      }
+      if (!packets.isEmpty()) currentPacket = packets.removeFirst();
+      if (currentPacket != null) ScanDetector(currentPacket);
+      
     }
     appendLog(txtArea, "Terminating Analyzer Thread.", Color.DARK_GRAY);
   }
