@@ -85,6 +85,26 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtTotal = new javax.swing.JTextPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtIncoming = new javax.swing.JTextPane();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtIncSyn = new javax.swing.JTextPane();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtISynAck = new javax.swing.JTextPane();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        txtIFin = new javax.swing.JTextPane();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        txtOutgoing = new javax.swing.JTextPane();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        txtOSyn = new javax.swing.JTextPane();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        txtOSynAck = new javax.swing.JTextPane();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        txtRST = new javax.swing.JTextPane();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        txtOFin = new javax.swing.JTextPane();
         spLog = new javax.swing.JScrollPane();
         txtaLog = new javax.swing.JTextPane();
         mbarMain = new javax.swing.JMenuBar();
@@ -236,32 +256,88 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
 
         jLabel10.setText("FIN");
 
+        txtTotal.setEditable(false);
+        txtTotal.setName("txtTcpTotal"); // NOI18N
+        jScrollPane1.setViewportView(txtTotal);
+        txtTotal.getAccessibleContext().setAccessibleName("txtTotal");
+
+        txtIncoming.setEditable(false);
+        jScrollPane2.setViewportView(txtIncoming);
+
+        txtIncSyn.setEditable(false);
+        jScrollPane3.setViewportView(txtIncSyn);
+
+        txtISynAck.setEditable(false);
+        jScrollPane4.setViewportView(txtISynAck);
+
+        txtIFin.setEditable(false);
+        jScrollPane5.setViewportView(txtIFin);
+
+        txtOutgoing.setEditable(false);
+        jScrollPane6.setViewportView(txtOutgoing);
+
+        txtOSyn.setEditable(false);
+        jScrollPane7.setViewportView(txtOSyn);
+
+        txtOSynAck.setEditable(false);
+        jScrollPane8.setViewportView(txtOSynAck);
+
+        txtRST.setEditable(false);
+        jScrollPane9.setViewportView(txtRST);
+
+        txtOFin.setEditable(false);
+        jScrollPane10.setViewportView(txtOFin);
+
         javax.swing.GroupLayout panelPHALayout = new javax.swing.GroupLayout(panelPHA);
         panelPHA.setLayout(panelPHALayout);
         panelPHALayout.setHorizontalGroup(
             panelPHALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPHALayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(36, 36, 36)
-                .addComponent(jLabel2)
+                .addGroup(panelPHALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel4)
+                .addGroup(panelPHALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addGroup(panelPHALayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 9, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel5)
+                .addGroup(panelPHALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel9)
-                .addGap(54, 54, 54)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel7)
+                .addGroup(panelPHALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4))
+                .addGap(27, 27, 27)
+                .addGroup(panelPHALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel8)
+                .addGroup(panelPHALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel10)
-                .addContainerGap(133, Short.MAX_VALUE))
+                .addGroup(panelPHALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane7)
+                    .addGroup(panelPHALayout.createSequentialGroup()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 20, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addGroup(panelPHALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane8))
+                .addGap(18, 18, 18)
+                .addGroup(panelPHALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38)
+                .addGroup(panelPHALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         panelPHALayout.setVerticalGroup(
             panelPHALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,10 +351,23 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
                     .addComponent(jLabel5)
                     .addComponent(jLabel6)
                     .addComponent(jLabel7)
-                    .addComponent(jLabel8)
                     .addComponent(jLabel9)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel10))
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelPHALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelPHALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane1)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(89, 89, 89))
         );
 
         tabpaneMain.addTab("PHA", panelPHA);
@@ -460,6 +549,16 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JLabel lblDevice;
     private javax.swing.JLabel lblPacketNumber;
     private javax.swing.JLabel lblStatus;
@@ -477,6 +576,16 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
     private javax.swing.JTabbedPane tabpaneMain;
     private javax.swing.JToolBar tbStatusBar;
     private javax.swing.JToggleButton tbtnCapture;
+    private javax.swing.JTextPane txtIFin;
+    private javax.swing.JTextPane txtISynAck;
+    private javax.swing.JTextPane txtIncSyn;
+    private javax.swing.JTextPane txtIncoming;
+    private javax.swing.JTextPane txtOFin;
+    private javax.swing.JTextPane txtOSyn;
+    private javax.swing.JTextPane txtOSynAck;
+    private javax.swing.JTextPane txtOutgoing;
+    private javax.swing.JTextPane txtRST;
+    private javax.swing.JTextPane txtTotal;
     private javax.swing.JTextPane txtaLog;
     // End of variables declaration//GEN-END:variables
 }
