@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cs492finalproject.Utils;
 
 /**
@@ -192,7 +187,7 @@ public class BoundsPopupMenuListener implements PopupMenuListener {
 
     checkHorizontalScrollBar(popup);
 
-		//  For some reason in JDK7 the popup will not display at its preferred
+    //  For some reason in JDK7 the popup will not display at its preferred
     //  width unless its location has been changed from its default
     //  (ie. for normal "pop down" shift the popup and reset)
     Component comboBox = popup.getInvoker();
@@ -214,7 +209,7 @@ public class BoundsPopupMenuListener implements PopupMenuListener {
   protected void popupWider(BasicComboPopup popup) {
     JList list = popup.getList();
 
-		//  Determine the maximimum width to use:
+    //  Determine the maximimum width to use:
     //  a) determine the popup preferred width
     //  b) limit width to the maximum if specified
     //  c) ensure width is not less than the scroll pane width
@@ -229,7 +224,7 @@ public class BoundsPopupMenuListener implements PopupMenuListener {
     Dimension scrollPaneSize = scrollPane.getPreferredSize();
     popupWidth = Math.max(popupWidth, scrollPaneSize.width);
 
-		//  Adjust the width
+    //  Adjust the width
     scrollPaneSize.width = popupWidth;
     scrollPane.setPreferredSize(scrollPaneSize);
     scrollPane.setMaximumSize(scrollPaneSize);
@@ -248,13 +243,13 @@ public class BoundsPopupMenuListener implements PopupMenuListener {
     p.x = 0;
     viewport.setViewPosition(p);
 
-		//  Remove the scrollbar so it is never painted
+    //  Remove the scrollbar so it is never painted
     if (!scrollBarRequired) {
       scrollPane.setHorizontalScrollBar(null);
       return;
     }
 
-		//	Make sure a horizontal scrollbar exists in the scrollpane
+    //	Make sure a horizontal scrollbar exists in the scrollpane
     JScrollBar horizontal = scrollPane.getHorizontalScrollBar();
 
     if (horizontal == null) {
@@ -263,7 +258,7 @@ public class BoundsPopupMenuListener implements PopupMenuListener {
       scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     }
 
-		//	Potentially increase height of scroll pane to display the scrollbar
+    //	Potentially increase height of scroll pane to display the scrollbar
     if (horizontalScrollBarWillBeVisible(popup, scrollPane)) {
       Dimension scrollPaneSize = scrollPane.getPreferredSize();
       scrollPaneSize.height += horizontal.getPreferredSize().height;

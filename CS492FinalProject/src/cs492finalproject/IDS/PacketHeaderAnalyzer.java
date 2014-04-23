@@ -78,7 +78,7 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
             oACK++;
           }
         }
-        
+
         if (org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).destination()).equals(IP.getHostAddress())) {
           // check incoming details
           incoming++;
@@ -96,11 +96,11 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
           }
         }
       }
-      
-//      appendLog(txtArea,"t:" + total + " i:" + incoming + " o:" + outgoing + " c1:" + iSYNnACK + " c2:" 
-//          + oSYNACK + " c3:" + oRST + " c4:" + oSYNnACK + " c5:" + iSYNACK + " c6:" + oFIN + " c7:" 
-//          + iFIN + " p1:" + P1 +  " p2:" + P2 + " p3:" + P3 + "\n", Color.black);
-      
+
+      appendLog(txtArea, "t:" + total + " i:" + incoming + " o:" + outgoing + " c1:" + iSYNnACK + " c2:"
+          + oSYNACK + " c3:" + oRST + " c4:" + oSYNnACK + " c5:" + iSYNACK + " c6:" + oFIN + " c7:"
+          + iFIN + " p1:" + P1 + " p2:" + P2 + " p3:" + P3 + "\n", Color.black);
+
       //Update Anomaly Detection Panel
       P1 = iSYNnACK - oSYNACK;
       if ((total - (iACK + oACK)) != 0) {
