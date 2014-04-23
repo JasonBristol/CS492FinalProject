@@ -59,26 +59,24 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
         Ip4 ipv4 = new Ip4();
         InetAddress IP;
       try {
-          if(packet.hasHeader(tcp)) {
+          if(packet.hasHeader(tcp) && packet.hasHeader(ipv4)) {
               total++;
               IP = InetAddress.getLocalHost();
-              if (packet.getHeader(ipv4).source() != null && packet.getHeader(ipv4).destination() != null) {
-                  if (org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()).equals(IP.getHostAddress())){
-                      // check outgoing details
-                      outgoing++;
-                      if(packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) oSYNACK++;
-                      if(!packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) oSYNnACK++;
-                      if(packet.getHeader(tcp).flags_RST()) oRST++;
-                      if(packet.getHeader(tcp).flags_FIN()) oFIN++;
-                  } 
-                  if (org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).destination()).equals(IP.getHostAddress())){
-                      // check outgoing details
-                      incoming++;
-                      if(!packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) iSYNnACK++;
-                      if(packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) iSYNACK++;
-                      if(packet.getHeader(tcp).flags_FIN()) iFIN++;
-                  }
-              }
+              if (org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()).equals(IP.getHostAddress())){
+                  // check outgoing details
+                  outgoing++;
+                  if(packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) oSYNACK++;
+                  if(!packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) oSYNnACK++;
+                  if(packet.getHeader(tcp).flags_RST()) oRST++;
+                  if(packet.getHeader(tcp).flags_FIN()) oFIN++;
+              } 
+              if (org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).destination()).equals(IP.getHostAddress())){
+                  // check outgoing details
+                  incoming++;
+                  if(!packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) iSYNnACK++;
+                  if(packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) iSYNACK++;
+                  if(packet.getHeader(tcp).flags_FIN()) iFIN++;
+              }              
           }
           //appendLog(txtArea,"t:" + total + " i:" + incoming + " o:" + outgoing + " c1:" + iSYNnACK + " c2:" + oSYNACK + " c3:" + oRST + " c4:" + oSYNnACK + " c5:" + iSYNACK + " c6:" + oFIN + " c7:" + iFIN + " p1:" + P1 +  " p2:" + P2 + " p3:" + P3 + "\n", Color.black);
           //update PHA Panel
@@ -92,6 +90,9 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
           packetPanes[7].setText(oSYNACK + "");
           packetPanes[8].setText(oRST + "");
           packetPanes[9].setText(oFIN + "");
+          P1 = iSYNnACK - oSYNACK;
+          P2 = oRST / (total - (iSYNnACK + oSYNnACK));
+          P3 = iSYNnACK - ((iFIN > oFIN)? iFIN : oFIN);
       } catch (UnknownHostException ex) {
           Logger.getLogger(PacketHeaderAnalyzer.class.getName()).log(Level.SEVERE, null, ex);
       }
