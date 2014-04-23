@@ -29,7 +29,7 @@ import org.jnetpcap.protocol.tcpip.Tcp;
 
 /**
  *
- * @author JGR
+ * @author JBristol
  */
 public class PacketCapture implements Runnable, LogInterface {
 
