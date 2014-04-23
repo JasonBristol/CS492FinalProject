@@ -8,6 +8,7 @@ package cs492finalproject.IDS;
 import cs492finalproject.Interfaces.LogInterface;
 import java.awt.Color;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JComboBox;
@@ -40,6 +41,7 @@ public class PacketCapture implements Runnable, LogInterface {
   private volatile boolean isCapturing;
   private final SimpleDateFormat dform = new SimpleDateFormat("MMM dd h:mm:ss a");
   private PacketHeaderAnalyzer PHA;
+  private ArrayList<Integer> ip_port_hashes;
 
   public PacketCapture(final int userVal, final int numPackets, JToggleButton tbtnCapture,
       JTextPane txtaLog, Pcap pcap, JComboBox cboxDevice, List<PcapIf> alldevs, StringBuilder errbuf) {
@@ -52,7 +54,7 @@ public class PacketCapture implements Runnable, LogInterface {
     this.alldevs = alldevs;
     this.errbuf = errbuf;
     this.isCapturing = false;
-
+    this.ip_port_hashes = new ArrayList<Integer>();
   }
 
   @Override
@@ -114,6 +116,9 @@ public class PacketCapture implements Runnable, LogInterface {
             offset = "offset=" + String.valueOf(tcp.getHeaderOffset());
             flags = "flags=" + String.valueOf(tcp.flags());
             checksum = "checksum=" + String.valueOf(tcp.checksum());
+            
+            // Store ip and port
+            ip_port_hashes.add((srcIP + String.valueOf(tcp.destination())).hashCode());
           }
 
           // Capture header strings
@@ -136,13 +141,12 @@ public class PacketCapture implements Runnable, LogInterface {
 
       isCapturing = false; // Stop processing
       tbtnCapture.setSelected(false); // Reset button
-      // Interrupt Analzyer Thread
-      analyzer.interrupt();
     }
     // Your here if isCapturing is false
-    // Clean up and destroy thread.
+    // Clean up and destroy threads.
     try {
       pcap.close(); // Close the connection
+      analyzer.interrupt(); // Safely destroy the thread
       Thread.currentThread().interrupt(); // Safely destroy the thread
     } catch (Exception e) {
       appendLog(txtaLog, "Link to PCAP closing, waiting for stray packets...\n", Color.DARK_GRAY);

@@ -54,69 +54,90 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
     }
     appendLog(txtArea, "Terminating Analzyer Thread.", Color.DARK_GRAY);
   }
-    private void SYNScan(PcapPacket packet) {
-        Tcp tcp = new Tcp();
-        Ip4 ipv4 = new Ip4();
-        InetAddress IP;
-      try {
-          IP = InetAddress.getLocalHost();
-          if (org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()).equals(IP.getHostAddress())){
-              // check outgoing details
-              if(packet.hasHeader(tcp)) {
-                  outgoing++;
-                  if(packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) outgoingSYNACK++;
-                  if(packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_PSH()) outgoingPSHACK++;
-                  if(packet.getHeader(tcp).flags_RST()) outgoingRST++;
-                  if(packet.getHeader(tcp).flags_SYN()) outgoingSYN++;
-                  if(packet.getHeader(tcp).flags_FIN()) outgoingFIN++;
-                  if(packet.getHeader(tcp).flags_ACK() && !packet.getHeader(tcp).flags_PSH() && !packet.getHeader(tcp).flags_SYN()) outgoingACK++;
-              }
-              
-          } else {
-              // check outgoing details
-              if(packet.hasHeader(tcp)) {
-                  incoming++;
-                  if(packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) incomingSYNACK++;
-                  if(packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_PSH()) incomingPSHACK++;
-                  if(packet.getHeader(tcp).flags_SYN()) incomingSYN++;
-                  if(packet.getHeader(tcp).flags_FIN()) incomingFIN++;
-                  if(packet.getHeader(tcp).flags_ACK() && !packet.getHeader(tcp).flags_PSH() && !packet.getHeader(tcp).flags_SYN()) incomingACK++;
-              }
+
+  private void SYNScan(PcapPacket packet) {
+    Tcp tcp = new Tcp();
+    Ip4 ipv4 = new Ip4();
+    InetAddress IP;
+    try {
+      IP = InetAddress.getLocalHost();
+      if (org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()).equals(IP.getHostAddress())) {
+        // check outgoing details
+        if (packet.hasHeader(tcp)) {
+          outgoing++;
+          if (packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) {
+            outgoingSYNACK++;
           }
-          P1 = incomingSYN - outgoingSYNACK;
-          P2 = outgoingRST / ((incoming + outgoing) - (incomingACK + outgoingACK + incomingPSHACK + outgoingPSHACK));
-          P3 = (incomingSYN - ((incomingFIN >= outgoingFIN) ? incomingFIN: outgoingFIN));
-          appendLog(txtArea, "c1: " + incomingSYN + " c2:" + outgoingSYNACK + " c3:" + outgoingRST + " c4:" + outgoingSYN + " c5:" + incomingSYNACK + " c6:" + outgoingFIN + " c7:" + incomingFIN + " p1:" + P1 +  " p2:" + P2 + " p3:" + P3 + "\n", Color.black);
-          //appendLog(txtArea, "incoming: " + incoming + "\toutgoing: " + outgoing + "\t " + IP.getHostAddress() + "\t " +  org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + "\n", Color.red);
-      } catch (UnknownHostException ex) {
-          Logger.getLogger(PacketHeaderAnalyzer.class.getName()).log(Level.SEVERE, null, ex);
+          if (packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_PSH()) {
+            outgoingPSHACK++;
+          }
+          if (packet.getHeader(tcp).flags_RST()) {
+            outgoingRST++;
+          }
+          if (packet.getHeader(tcp).flags_SYN()) {
+            outgoingSYN++;
+          }
+          if (packet.getHeader(tcp).flags_FIN()) {
+            outgoingFIN++;
+          }
+          if (packet.getHeader(tcp).flags_ACK() && !packet.getHeader(tcp).flags_PSH() && !packet.getHeader(tcp).flags_SYN()) {
+            outgoingACK++;
+          }
+        }
+      } else {
+        // check outgoing details
+        if (packet.hasHeader(tcp)) {
+          incoming++;
+          if (packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) {
+            incomingSYNACK++;
+          }
+          if (packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_PSH()) {
+            incomingPSHACK++;
+          }
+          if (packet.getHeader(tcp).flags_SYN()) {
+            incomingSYN++;
+          }
+          if (packet.getHeader(tcp).flags_FIN()) {
+            incomingFIN++;
+          }
+          if (packet.getHeader(tcp).flags_ACK() && !packet.getHeader(tcp).flags_PSH() && !packet.getHeader(tcp).flags_SYN()) {
+            incomingACK++;
+          }
+        }
       }
-        /*
-        if (org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()).equals("192.168.0.2") || org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()).equals("192.168.0.3")) {
-            appendLog(txtArea, "Source: " + org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + "\n", Color.red);
-        }*/
+      P1 = incomingSYN - outgoingSYNACK;
+      P2 = outgoingRST / ((incoming + outgoing) - (incomingACK + outgoingACK + incomingPSHACK + outgoingPSHACK));
+      P3 = (incomingSYN - ((incomingFIN >= outgoingFIN) ? incomingFIN : outgoingFIN));
+      appendLog(txtArea, "c1: " + incomingSYN + " c2:" + outgoingSYNACK + " c3:" + outgoingRST + " c4:" + outgoingSYN + " c5:" + incomingSYNACK + " c6:" + outgoingFIN + " c7:" + incomingFIN + " p1:" + P1 + " p2:" + P2 + " p3:" + P3 + "\n", Color.black);
+      //appendLog(txtArea, "incoming: " + incoming + "\toutgoing: " + outgoing + "\t " + IP.getHostAddress() + "\t " +  org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + "\n", Color.red);
+    } catch (UnknownHostException ex) {
+      Logger.getLogger(PacketHeaderAnalyzer.class.getName()).log(Level.SEVERE, null, ex);
     }
-    
-    private void checkTcpFlags(PcapPacket packet){
-        Tcp tcp = new Tcp();
-        Ip4 ipv4 = new Ip4();
+    /*
+     if (org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()).equals("192.168.0.2") || org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()).equals("192.168.0.3")) {
+     appendLog(txtArea, "Source: " + org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + "\n", Color.red);
+     }*/
+  }
+
+  private void checkTcpFlags(PcapPacket packet) {
+    Tcp tcp = new Tcp();
+    Ip4 ipv4 = new Ip4();
         //WORK IN PROGRESS
 
-        // SYN and URG invalid
-        if(packet.getHeader(tcp).flags_SYN() && packet.getHeader(tcp).flags_URG() ) {
-            appendLog(txtArea, org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + " is Suspicious 001\n", Color.black
-            );
-        }
-        // SYN and PSH invalid
-        if(packet.getHeader(tcp).flags_SYN() && packet.getHeader(tcp).flags_PSH() ) {
-            appendLog(txtArea, org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + " is Suspicious 002\n",Color.black);
-        }
-        // SYN and FIN and RST
-        if(packet.getHeader(tcp).flags_SYN() && packet.getHeader(tcp).flags_FIN() && packet.getHeader(tcp).flags_RST() ) {
-            appendLog(txtArea, org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + " is Suspicious 003\n", Color.black);
-        }
+    // SYN and URG invalid
+    if (packet.getHeader(tcp).flags_SYN() && packet.getHeader(tcp).flags_URG()) {
+      appendLog(txtArea, org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + " is Suspicious 001\n", Color.black
+      );
     }
-
+    // SYN and PSH invalid
+    if (packet.getHeader(tcp).flags_SYN() && packet.getHeader(tcp).flags_PSH()) {
+      appendLog(txtArea, org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + " is Suspicious 002\n", Color.black);
+    }
+    // SYN and FIN and RST
+    if (packet.getHeader(tcp).flags_SYN() && packet.getHeader(tcp).flags_FIN() && packet.getHeader(tcp).flags_RST()) {
+      appendLog(txtArea, org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + " is Suspicious 003\n", Color.black);
+    }
+  }
 
   public void addPacket(PcapPacket packet) {
     packets.add(packet);
