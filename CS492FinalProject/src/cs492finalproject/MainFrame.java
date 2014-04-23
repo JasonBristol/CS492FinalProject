@@ -73,8 +73,6 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
     lblPacketNumber = new javax.swing.JLabel();
     spinPacketNumber = new javax.swing.JSpinner();
     tbtnCapture = new javax.swing.JToggleButton();
-    panelFiltering = new javax.swing.JPanel();
-    panelAnomaly = new javax.swing.JPanel();
     panelPHA = new javax.swing.JPanel();
     panelPHA_2 = new javax.swing.JPanel();
     txtOutgoing = new javax.swing.JTextField();
@@ -119,7 +117,7 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
     menuEdit = new javax.swing.JMenu();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-    setTitle("CS 492 - Host-Based IDS System");
+    setTitle("CS 492 - Host-Based Intrusion Detection System");
     setMinimumSize(new java.awt.Dimension(750, 500));
     setName("frameMaine"); // NOI18N
 
@@ -183,7 +181,7 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
           .addGroup(panelCapturingLayout.createSequentialGroup()
             .addComponent(lblDevice)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(cboxDevice, 0, 558, Short.MAX_VALUE)
+            .addComponent(cboxDevice, 0, 566, Short.MAX_VALUE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(btnScan))
           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCapturingLayout.createSequentialGroup()
@@ -214,33 +212,6 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
     );
 
     tabpaneMain.addTab("Packet Capturing", panelCapturing);
-
-    javax.swing.GroupLayout panelFilteringLayout = new javax.swing.GroupLayout(panelFiltering);
-    panelFiltering.setLayout(panelFilteringLayout);
-    panelFilteringLayout.setHorizontalGroup(
-      panelFilteringLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 787, Short.MAX_VALUE)
-    );
-    panelFilteringLayout.setVerticalGroup(
-      panelFilteringLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 189, Short.MAX_VALUE)
-    );
-
-    tabpaneMain.addTab("Packet Filtering", panelFiltering);
-
-    javax.swing.GroupLayout panelAnomalyLayout = new javax.swing.GroupLayout(panelAnomaly);
-    panelAnomaly.setLayout(panelAnomalyLayout);
-    panelAnomalyLayout.setHorizontalGroup(
-      panelAnomalyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 787, Short.MAX_VALUE)
-    );
-    panelAnomalyLayout.setVerticalGroup(
-      panelAnomalyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 189, Short.MAX_VALUE)
-    );
-
-    tabpaneMain.addTab("Anomaly Detection", panelAnomaly);
-    tabpaneMain.setEnabledAt(tabpaneMain.indexOfTab("Anomaly Detection"), false);
 
     txtOutgoing.setEditable(false);
     txtOutgoing.setFocusable(false);
@@ -708,9 +679,7 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
   private javax.swing.JTextField p2;
   private javax.swing.JTextField p3;
   private javax.swing.JTextField p4;
-  private javax.swing.JPanel panelAnomaly;
   private javax.swing.JPanel panelCapturing;
-  private javax.swing.JPanel panelFiltering;
   private javax.swing.JPanel panelPHA;
   private javax.swing.JPanel panelPHA_1;
   private javax.swing.JPanel panelPHA_2;

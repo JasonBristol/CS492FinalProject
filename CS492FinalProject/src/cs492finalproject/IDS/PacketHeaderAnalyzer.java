@@ -36,7 +36,7 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
 
   public PacketHeaderAnalyzer(JTextPane txtArea, JTextField[] packetFields) {
     this.txtArea = txtArea;
-    packets = new LinkedList<PcapPacket>();
+    this.packets = new LinkedList<PcapPacket>();
     this.packetFields = packetFields;
 
   }

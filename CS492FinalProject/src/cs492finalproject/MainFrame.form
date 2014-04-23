@@ -32,7 +32,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="CS 492 - Host-Based IDS System"/>
+    <Property name="title" type="java.lang.String" value="CS 492 - Host-Based Intrusion Detection System"/>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[750, 500]"/>
     </Property>
@@ -171,7 +171,7 @@
                           <Group type="102" attributes="0">
                               <Component id="lblDevice" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="cboxDevice" pref="558" max="32767" attributes="0"/>
+                              <Component id="cboxDevice" pref="566" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnScan" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -261,53 +261,6 @@
               </Events>
             </Component>
           </SubComponents>
-        </Container>
-        <Container class="javax.swing.JPanel" name="panelFiltering">
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Packet Filtering">
-                <Property name="tabTitle" type="java.lang.String" value="Packet Filtering"/>
-              </JTabbedPaneConstraints>
-            </Constraint>
-          </Constraints>
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="787" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="189" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-          </Layout>
-        </Container>
-        <Container class="javax.swing.JPanel" name="panelAnomaly">
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="tabpaneMain.setEnabledAt(tabpaneMain.indexOfTab(&quot;Anomaly Detection&quot;), false);"/>
-          </AuxValues>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Anomaly Detection">
-                <Property name="tabTitle" type="java.lang.String" value="Anomaly Detection"/>
-              </JTabbedPaneConstraints>
-            </Constraint>
-          </Constraints>
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="787" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="189" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-          </Layout>
         </Container>
         <Container class="javax.swing.JPanel" name="panelPHA">
           <Constraints>
