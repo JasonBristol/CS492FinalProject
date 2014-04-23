@@ -108,7 +108,7 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
       System.out.println(P2 + "\t" + oRST + "\t" + (total - (iACK + oACK)));
       P3 = iSYNnACK - ((iFIN > oFIN) ? iFIN : oFIN);
       if (iFIN != 0) {
-        P4 = (double)iFIN/ oFIN;
+        P4 = (double) iFIN / oFIN;
       }
       packetFields[0].setText(total + "");
       packetFields[1].setText(incoming + "");
@@ -124,7 +124,7 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
       packetFields[11].setText(P2 + "");
       packetFields[12].setText(P3 + "");
       packetFields[13].setText(P4 + "");
-     
+
     } catch (UnknownHostException ex) {
       Logger.getLogger(PacketHeaderAnalyzer.class.getName()).log(Level.SEVERE, null, ex);
     }
