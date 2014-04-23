@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JComboBox;
+import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
 import javax.swing.text.SimpleAttributeSet;
@@ -42,10 +43,10 @@ public class PacketCapture implements Runnable, LogInterface {
   private final SimpleDateFormat dform = new SimpleDateFormat("MMM dd h:mm:ss a");
   private PacketHeaderAnalyzer PHA;
   private ArrayList<Integer> ip_port_hashes;
-  private JTextPane[] packetPanes;
+  private JTextField[] packetFields;
 
   public PacketCapture(final int userVal, final int numPackets, JToggleButton tbtnCapture,
-      JTextPane txtaLog, Pcap pcap, JComboBox cboxDevice, List<PcapIf> alldevs, StringBuilder errbuf, JTextPane[] packetPanes) {
+      JTextPane txtaLog, Pcap pcap, JComboBox cboxDevice, List<PcapIf> alldevs, StringBuilder errbuf, JTextField[] packetFields) {
     this.userVal = userVal;
     this.numPackets = numPackets;
     this.tbtnCapture = tbtnCapture;
@@ -56,13 +57,13 @@ public class PacketCapture implements Runnable, LogInterface {
     this.errbuf = errbuf;
     this.isCapturing = false;
     this.ip_port_hashes = new ArrayList<Integer>();
-    this.packetPanes = packetPanes;
+    this.packetFields = packetFields;
   }
 
   @Override
   public void run() {
     // Create Analyzer Thread
-    PHA = new PacketHeaderAnalyzer(txtaLog, packetPanes);
+    PHA = new PacketHeaderAnalyzer(txtaLog, packetFields);
     Thread analyzer = new Thread(PHA);
     analyzer.start();
 
@@ -118,22 +119,25 @@ public class PacketCapture implements Runnable, LogInterface {
             offset = "offset=" + String.valueOf(tcp.getHeaderOffset());
             flags = "flags=" + String.valueOf(tcp.flags());
             checksum = "checksum=" + String.valueOf(tcp.checksum());
-            
+
             // Store ip and port
-            ip_port_hashes.add((srcIP + String.valueOf(tcp.destination())).hashCode());
+            int hash = (srcIP + String.valueOf(tcp.destination())).hashCode();
+            if (!ip_port_hashes.contains(hash)) {
+              ip_port_hashes.add(hash);
+            }
           }
 
           // Capture header strings
           String date = dform.format(new Date(packet.getCaptureHeader().timestampInMillis()));
           /*
-          appendLog(txtaLog, "#---| " + date
-              + "\t" + srcIP + srcPort + "\t=====>\t" + destIP + destPort
-              + "\t" + sequence
-              + "\t" + ack
-              + "\t" + offset
-              + "\t" + flags
-              + "\t" + checksum
-              + "\n", new Color(50, 148, 44));*/
+           appendLog(txtaLog, "#---| " + date
+           + "\t" + srcIP + srcPort + "\t=====>\t" + destIP + destPort
+           + "\t" + sequence
+           + "\t" + ack
+           + "\t" + offset
+           + "\t" + flags
+           + "\t" + checksum
+           + "\n", new Color(50, 148, 44));*/
         }
       };
 

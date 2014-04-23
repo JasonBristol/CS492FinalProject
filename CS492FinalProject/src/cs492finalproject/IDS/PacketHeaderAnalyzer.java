@@ -12,6 +12,7 @@ import java.net.UnknownHostException;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
@@ -31,12 +32,12 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
   private int total, incoming, outgoing, iSYNnACK, oSYNACK, oRST, iSYNACK, oSYNnACK, iFIN, oFIN;
   private double P2;
   private int P1, P3;
-  JTextPane[] packetPanes;
+  JTextField[] packetFields;
 
-  public PacketHeaderAnalyzer(JTextPane txtArea, JTextPane[] packetPanes) {
+  public PacketHeaderAnalyzer(JTextPane txtArea, JTextField[] packetFields) {
     this.txtArea = txtArea;
     packets = new LinkedList<PcapPacket>();
-    this.packetPanes = packetPanes;
+    this.packetFields = packetFields;
 
   }
 
@@ -46,61 +47,78 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
     Ip4 ipv4 = new Ip4();
     PcapPacket currentPacket;
     while (!Thread.interrupted()) {
-        if (!packets.isEmpty()){
-            currentPacket = packets.removeFirst();
-            ScanDetector(currentPacket);
-        }
+      if (!packets.isEmpty()) {
+        currentPacket = packets.removeFirst();
+        ScanDetector(currentPacket);
+      }
     }
     appendLog(txtArea, "Terminating Analzyer Thread.", Color.DARK_GRAY);
   }
-    private void ScanDetector(PcapPacket packet) {
-        Tcp tcp = new Tcp();
-        Ip4 ipv4 = new Ip4();
-        InetAddress IP;
-      try {
-          if(packet.hasHeader(tcp) && packet.hasHeader(ipv4)) {
-              total++;
-              IP = InetAddress.getLocalHost();
-              if (org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()).equals(IP.getHostAddress())){
-                  // check outgoing details
-                  outgoing++;
-                  if(packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) oSYNACK++;
-                  if(!packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) oSYNnACK++;
-                  if(packet.getHeader(tcp).flags_RST()) oRST++;
-                  if(packet.getHeader(tcp).flags_FIN()) oFIN++;
-              } 
-              if (org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).destination()).equals(IP.getHostAddress())){
-                  // check outgoing details
-                  incoming++;
-                  if(!packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) iSYNnACK++;
-                  if(packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) iSYNACK++;
-                  if(packet.getHeader(tcp).flags_FIN()) iFIN++;
-              }              
-          }
-          //appendLog(txtArea,"t:" + total + " i:" + incoming + " o:" + outgoing + " c1:" + iSYNnACK + " c2:" + oSYNACK + " c3:" + oRST + " c4:" + oSYNnACK + " c5:" + iSYNACK + " c6:" + oFIN + " c7:" + iFIN + " p1:" + P1 +  " p2:" + P2 + " p3:" + P3 + "\n", Color.black);
-          //update PHA Panel
-          packetPanes[0].setText(total + "");
-          packetPanes[1].setText(incoming + "");
-          packetPanes[2].setText(iSYNnACK + "");
-          packetPanes[3].setText(iSYNACK + "");
-          packetPanes[4].setText(iFIN + "");
-          packetPanes[5].setText(outgoing + "");
-          packetPanes[6].setText(oSYNnACK + "");
-          packetPanes[7].setText(oSYNACK + "");
-          packetPanes[8].setText(oRST + "");
-          packetPanes[9].setText(oFIN + "");
-          packetPanes[10].setText(P1 + "");
-          packetPanes[11].setText(P2 + "");
-          packetPanes[12].setText(P3 + "");
-          P1 = iSYNnACK - oSYNACK;
-          if ((total - (iSYNnACK + oSYNnACK)) != 0) P2 = oRST / (total - (iSYNnACK + oSYNnACK));
-          P3 = iSYNnACK - ((iFIN > oFIN)? iFIN : oFIN);
-      } catch (UnknownHostException ex) {
-          Logger.getLogger(PacketHeaderAnalyzer.class.getName()).log(Level.SEVERE, null, ex);
-      }
-    }
 
-public void addPacket(PcapPacket packet) {
+  private void ScanDetector(PcapPacket packet) {
+    Tcp tcp = new Tcp();
+    Ip4 ipv4 = new Ip4();
+    InetAddress IP;
+    try {
+      if (packet.hasHeader(tcp) && packet.hasHeader(ipv4)) {
+        total++;
+        IP = InetAddress.getLocalHost();
+        if (org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()).equals(IP.getHostAddress())) {
+          // check outgoing details
+          outgoing++;
+          if (packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) {
+            oSYNACK++;
+          }
+          if (!packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) {
+            oSYNnACK++;
+          }
+          if (packet.getHeader(tcp).flags_RST()) {
+            oRST++;
+          }
+          if (packet.getHeader(tcp).flags_FIN()) {
+            oFIN++;
+          }
+        }
+        if (org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).destination()).equals(IP.getHostAddress())) {
+          // check outgoing details
+          incoming++;
+          if (!packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) {
+            iSYNnACK++;
+          }
+          if (packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) {
+            iSYNACK++;
+          }
+          if (packet.getHeader(tcp).flags_FIN()) {
+            iFIN++;
+          }
+        }
+      }
+          //appendLog(txtArea,"t:" + total + " i:" + incoming + " o:" + outgoing + " c1:" + iSYNnACK + " c2:" + oSYNACK + " c3:" + oRST + " c4:" + oSYNnACK + " c5:" + iSYNACK + " c6:" + oFIN + " c7:" + iFIN + " p1:" + P1 +  " p2:" + P2 + " p3:" + P3 + "\n", Color.black);
+      //update PHA Panel
+      packetFields[0].setText(total + "");
+      packetFields[1].setText(incoming + "");
+      packetFields[2].setText(iSYNnACK + "");
+      packetFields[3].setText(iSYNACK + "");
+      packetFields[4].setText(iFIN + "");
+      packetFields[5].setText(outgoing + "");
+      packetFields[6].setText(oSYNnACK + "");
+      packetFields[7].setText(oSYNACK + "");
+      packetFields[8].setText(oRST + "");
+      packetFields[9].setText(oFIN + "");
+      packetFields[10].setText(P1 + "");
+      packetFields[11].setText(P2 + "");
+      packetFields[12].setText(P3 + "");
+      P1 = iSYNnACK - oSYNACK;
+      if ((total - (iSYNnACK + oSYNnACK)) != 0) {
+        P2 = oRST / (total - (iSYNnACK + oSYNnACK));
+      }
+      P3 = iSYNnACK - ((iFIN > oFIN) ? iFIN : oFIN);
+    } catch (UnknownHostException ex) {
+      Logger.getLogger(PacketHeaderAnalyzer.class.getName()).log(Level.SEVERE, null, ex);
+    }
+  }
+
+  public void addPacket(PcapPacket packet) {
     packets.add(packet);
   }
 
