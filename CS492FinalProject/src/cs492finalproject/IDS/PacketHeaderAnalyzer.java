@@ -28,8 +28,8 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
 
   private final LinkedList<PcapPacket> packets;
   private final JTextPane txtArea;
-  private int total, incoming, outgoing, iSYNnACK, oSYNACK, oRST, iSYNACK, oSYNnACK, iFIN, oFIN;
-  private double P2;
+  private int total, incoming, outgoing, iSYNnACK, oSYNACK, oRST, iSYNACK, oSYNnACK, iFIN, oFIN, iACK, oACK;
+  private double P2, P4;
   private int P1, P3;
   JTextPane[] packetPanes;
 
@@ -68,6 +68,7 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
                   if(!packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) oSYNnACK++;
                   if(packet.getHeader(tcp).flags_RST()) oRST++;
                   if(packet.getHeader(tcp).flags_FIN()) oFIN++;
+                  if(packet.getHeader(tcp).flags_ACK() && !packet.getHeader(tcp).flags_SYN()) oACK++;
               } 
               if (org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).destination()).equals(IP.getHostAddress())){
                   // check outgoing details
@@ -75,6 +76,7 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
                   if(!packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) iSYNnACK++;
                   if(packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) iSYNACK++;
                   if(packet.getHeader(tcp).flags_FIN()) iFIN++;
+                  if(packet.getHeader(tcp).flags_ACK() && !packet.getHeader(tcp).flags_SYN()) iACK++;
               }              
           }
           //appendLog(txtArea,"t:" + total + " i:" + incoming + " o:" + outgoing + " c1:" + iSYNnACK + " c2:" + oSYNACK + " c3:" + oRST + " c4:" + oSYNnACK + " c5:" + iSYNACK + " c6:" + oFIN + " c7:" + iFIN + " p1:" + P1 +  " p2:" + P2 + " p3:" + P3 + "\n", Color.black);
@@ -93,8 +95,10 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
           packetPanes[11].setText(P2 + "");
           packetPanes[12].setText(P3 + "");
           P1 = iSYNnACK - oSYNACK;
-          if ((total - (iSYNnACK + oSYNnACK)) != 0) P2 = oRST / (total - (iSYNnACK + oSYNnACK));
+          if ((total - (iACK + oACK)) != 0) P2 = (double)oRST / (total - (iACK + oACK));
+          System.out.println(P2 + "\t" + oRST + "\t" + (total - (iACK + oACK)) );
           P3 = iSYNnACK - ((iFIN > oFIN)? iFIN : oFIN);
+          if (iFIN != 0) P4 = oFIN/iFIN;
       } catch (UnknownHostException ex) {
           Logger.getLogger(PacketHeaderAnalyzer.class.getName()).log(Level.SEVERE, null, ex);
       }
