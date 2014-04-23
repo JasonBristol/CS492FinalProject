@@ -69,7 +69,8 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
                   if(!packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) oSYNnACK++;
                   if(packet.getHeader(tcp).flags_RST()) oRST++;
                   if(packet.getHeader(tcp).flags_FIN()) oFIN++;
-              } else {
+              } 
+              if (org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).destination()).equals(IP.getHostAddress())){
                   // check outgoing details
                   incoming++;
                   if(!packet.getHeader(tcp).flags_ACK() && packet.getHeader(tcp).flags_SYN()) iSYNnACK++;
