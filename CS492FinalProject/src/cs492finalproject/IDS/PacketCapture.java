@@ -131,14 +131,14 @@ public class PacketCapture implements Runnable, LogInterface {
           }
 
           try {
-          if (packet.hasHeader(tcp) && packet.hasHeader(ipv4)) {
-            inet = InetAddress.getLocalHost();
-            if (srcIP.equals(inet.getHostAddress())) {
-              direction = "=====>";
-            } else {
-              direction = "<=====";
+            if (packet.hasHeader(tcp) && packet.hasHeader(ipv4)) {
+              inet = InetAddress.getLocalHost();
+              if (srcIP.equals(inet.getHostAddress())) {
+                direction = "=====>";
+              } else {
+                direction = "<=====";
+              }
             }
-          }
           } catch (UnknownHostException e) {
             appendLog(txtaLog, e.getMessage(), Color.RED);
           }
