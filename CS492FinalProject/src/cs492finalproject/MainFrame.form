@@ -508,7 +508,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTextPane" name="txtIncSyn">
+                <Component class="javax.swing.JTextPane" name="txtISyn">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                   </Properties>

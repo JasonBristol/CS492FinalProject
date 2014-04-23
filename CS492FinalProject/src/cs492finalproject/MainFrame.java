@@ -90,7 +90,7 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
         jScrollPane2 = new javax.swing.JScrollPane();
         txtIncoming = new javax.swing.JTextPane();
         jScrollPane3 = new javax.swing.JScrollPane();
-        txtIncSyn = new javax.swing.JTextPane();
+        txtISyn = new javax.swing.JTextPane();
         jScrollPane4 = new javax.swing.JScrollPane();
         txtISynAck = new javax.swing.JTextPane();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -264,8 +264,8 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
         txtIncoming.setEditable(false);
         jScrollPane2.setViewportView(txtIncoming);
 
-        txtIncSyn.setEditable(false);
-        jScrollPane3.setViewportView(txtIncSyn);
+        txtISyn.setEditable(false);
+        jScrollPane3.setViewportView(txtISyn);
 
         txtISynAck.setEditable(false);
         jScrollPane4.setViewportView(txtISynAck);
@@ -460,9 +460,11 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
     }//GEN-LAST:event_btnScanActionPerformed
 
     private void tbtnCaptureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnCaptureActionPerformed
+      
       this.userVal = Integer.parseInt(spinPacketNumber.getValue().toString());
       this.numPackets = (userVal == 0) ? Pcap.LOOP_INFINITE : userVal;
-      this.tPCAP = new PacketCapture(userVal, numPackets, tbtnCapture, txtaLog, pcap, cboxDevice, alldevs, errbuf);
+      JTextPane[] packetPanes = {txtTotal,txtIncoming,txtISyn, txtISynAck, txtIFin, txtOutgoing, txtOSyn, txtOSynAck, txtRST, txtOFin};
+      this.tPCAP = new PacketCapture(userVal, numPackets, tbtnCapture, txtaLog, pcap, cboxDevice, alldevs, errbuf, packetPanes);
       Thread pcapThread = new Thread(tPCAP);
       pcapThread.start();
     }//GEN-LAST:event_tbtnCaptureActionPerformed
@@ -577,8 +579,8 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
     private javax.swing.JToolBar tbStatusBar;
     private javax.swing.JToggleButton tbtnCapture;
     private javax.swing.JTextPane txtIFin;
+    private javax.swing.JTextPane txtISyn;
     private javax.swing.JTextPane txtISynAck;
-    private javax.swing.JTextPane txtIncSyn;
     private javax.swing.JTextPane txtIncoming;
     private javax.swing.JTextPane txtOFin;
     private javax.swing.JTextPane txtOSyn;

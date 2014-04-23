@@ -42,9 +42,10 @@ public class PacketCapture implements Runnable, LogInterface {
   private final SimpleDateFormat dform = new SimpleDateFormat("MMM dd h:mm:ss a");
   private PacketHeaderAnalyzer PHA;
   private ArrayList<Integer> ip_port_hashes;
+  private JTextPane[] packetPanes;
 
   public PacketCapture(final int userVal, final int numPackets, JToggleButton tbtnCapture,
-      JTextPane txtaLog, Pcap pcap, JComboBox cboxDevice, List<PcapIf> alldevs, StringBuilder errbuf) {
+      JTextPane txtaLog, Pcap pcap, JComboBox cboxDevice, List<PcapIf> alldevs, StringBuilder errbuf, JTextPane[] packetPanes) {
     this.userVal = userVal;
     this.numPackets = numPackets;
     this.tbtnCapture = tbtnCapture;
@@ -55,6 +56,7 @@ public class PacketCapture implements Runnable, LogInterface {
     this.errbuf = errbuf;
     this.isCapturing = false;
     this.ip_port_hashes = new ArrayList<Integer>();
+    this.packetPanes = packetPanes;
   }
 
   @Override

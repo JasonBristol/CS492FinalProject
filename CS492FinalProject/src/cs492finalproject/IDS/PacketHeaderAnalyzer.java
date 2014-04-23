@@ -46,7 +46,6 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
       if (!packets.isEmpty()) {
         PcapPacket currentPacket = packets.removeFirst();
         if (currentPacket.hasHeader(tcp)) {
-          //checkTcpFlags(currentPacket);
           ScanDetector(currentPacket);
         }
       }
@@ -77,7 +76,7 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
               }
           }
           appendLog(txtArea,"t:" + total + " i:" + incoming + " o:" + outgoing + " c1:" + iSYNnACK + " c2:" + oSYNACK + " c3:" + oRST + " c4:" + oSYNnACK + " c5:" + iSYNACK + " c6:" + oFIN + " c7:" + iFIN + " p1:" + P1 +  " p2:" + P2 + " p3:" + P3 + "\n", Color.black);
-          //appendLog(txtArea, "incoming: " + incoming + "\toutgoing: " + outgoing + "\t " + IP.getHostAddress() + "\t " +  org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()) + "\n", Color.red);
+          
       } catch (UnknownHostException ex) {
           Logger.getLogger(PacketHeaderAnalyzer.class.getName()).log(Level.SEVERE, null, ex);
       }
