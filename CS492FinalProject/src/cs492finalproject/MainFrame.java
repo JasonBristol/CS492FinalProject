@@ -257,35 +257,45 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
         jLabel10.setText("FIN");
 
         txtTotal.setEditable(false);
+        txtTotal.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         txtTotal.setName("txtTcpTotal"); // NOI18N
         jScrollPane1.setViewportView(txtTotal);
         txtTotal.getAccessibleContext().setAccessibleName("txtTotal");
 
         txtIncoming.setEditable(false);
+        txtIncoming.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jScrollPane2.setViewportView(txtIncoming);
 
         txtISyn.setEditable(false);
+        txtISyn.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jScrollPane3.setViewportView(txtISyn);
 
         txtISynAck.setEditable(false);
+        txtISynAck.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jScrollPane4.setViewportView(txtISynAck);
 
         txtIFin.setEditable(false);
+        txtIFin.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jScrollPane5.setViewportView(txtIFin);
 
         txtOutgoing.setEditable(false);
+        txtOutgoing.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jScrollPane6.setViewportView(txtOutgoing);
 
         txtOSyn.setEditable(false);
+        txtOSyn.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jScrollPane7.setViewportView(txtOSyn);
 
         txtOSynAck.setEditable(false);
+        txtOSynAck.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jScrollPane8.setViewportView(txtOSynAck);
 
         txtRST.setEditable(false);
+        txtRST.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jScrollPane9.setViewportView(txtRST);
 
         txtOFin.setEditable(false);
+        txtOFin.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jScrollPane10.setViewportView(txtOFin);
 
         javax.swing.GroupLayout panelPHALayout = new javax.swing.GroupLayout(panelPHA);
@@ -296,22 +306,20 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
                 .addContainerGap()
                 .addGroup(panelPHALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelPHALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
-                    .addGroup(panelPHALayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(0, 9, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabel2)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelPHALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelPHALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(panelPHALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane4))
-                .addGap(27, 27, 27)
                 .addGroup(panelPHALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
