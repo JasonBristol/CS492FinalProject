@@ -450,6 +450,7 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
         );
 
         txtAlert.setEditable(false);
+        txtAlert.setForeground(new java.awt.Color(255, 0, 0));
         txtAlert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtAlertActionPerformed(evt);
