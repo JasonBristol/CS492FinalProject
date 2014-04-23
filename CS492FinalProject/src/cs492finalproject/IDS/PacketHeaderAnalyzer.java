@@ -93,7 +93,7 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
           packetPanes[11].setText(P2 + "");
           packetPanes[12].setText(P3 + "");
           P1 = iSYNnACK - oSYNACK;
-          P2 = oRST / (total - (iSYNnACK + oSYNnACK));
+          if ((total - (iSYNnACK + oSYNnACK)) != 0) P2 = oRST / (total - (iSYNnACK + oSYNnACK));
           P3 = iSYNnACK - ((iFIN > oFIN)? iFIN : oFIN);
       } catch (UnknownHostException ex) {
           Logger.getLogger(PacketHeaderAnalyzer.class.getName()).log(Level.SEVERE, null, ex);
