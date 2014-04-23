@@ -102,7 +102,7 @@ public class PacketCapture implements Runnable, LogInterface {
           }
 
           // Add packet to Analzyer Thread
-          PcapPacket clone = packet;
+          PcapPacket clone = new PcapPacket(packet);
           PHA.addPacket(clone);
 
           if (packet.hasHeader(ipv4)) {
