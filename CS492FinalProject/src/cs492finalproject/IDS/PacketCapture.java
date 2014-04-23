@@ -7,6 +7,7 @@ package cs492finalproject.IDS;
 
 import cs492finalproject.Interfaces.LogInterface;
 import java.awt.Color;
+import java.net.InetAddress;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,6 +45,7 @@ public class PacketCapture implements Runnable, LogInterface {
   private PacketHeaderAnalyzer PHA;
   private ArrayList<Integer> ip_port_hashes;
   private JTextField[] packetFields;
+  private InetAddress inet;
 
   public PacketCapture(final int userVal, final int numPackets, JToggleButton tbtnCapture,
       JTextPane txtaLog, Pcap pcap, JComboBox cboxDevice, List<PcapIf> alldevs, StringBuilder errbuf, JTextField[] packetFields) {
@@ -90,7 +92,7 @@ public class PacketCapture implements Runnable, LogInterface {
 
         // Initialize strings
         String srcIP = "", destIP = "", srcPort = "", destPort = "", sequence = "",
-            ack = "", offset = "", flags = "", checksum = "";
+            ack = "", offset = "", flags = "", checksum = "", direction = "";
 
         @Override
         public void nextPacket(final PcapPacket packet, final String user) {
@@ -127,17 +129,25 @@ public class PacketCapture implements Runnable, LogInterface {
             }
           }
 
+          if (packet.hasHeader(tcp) && packet.hasHeader(ipv4)) {
+//            if (srcIP.equals(inet.getHostAddress())) {
+//              direction = "=====>";
+//            } else {
+//              direction = "<=====";
+//            }
+          }
+
           // Capture header strings
           String date = dform.format(new Date(packet.getCaptureHeader().timestampInMillis()));
-          /*
-           appendLog(txtaLog, "#---| " + date
-           + "\t" + srcIP + srcPort + "\t=====>\t" + destIP + destPort
-           + "\t" + sequence
-           + "\t" + ack
-           + "\t" + offset
-           + "\t" + flags
-           + "\t" + checksum
-           + "\n", new Color(50, 148, 44));*/
+
+          appendLog(txtaLog, "#---| " + date
+              + "\t" + srcIP + srcPort + "\t" + direction + "\t" + destIP + destPort
+              + "\t" + sequence
+              + "\t" + ack
+              + "\t" + offset
+              + "\t" + flags
+              + "\t" + checksum
+              + "\n", new Color(50, 148, 44));
         }
       };
 
