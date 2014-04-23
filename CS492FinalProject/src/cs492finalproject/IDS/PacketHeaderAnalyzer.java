@@ -44,13 +44,12 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
   public void run() {
     Tcp tcp = new Tcp();
     Ip4 ipv4 = new Ip4();
+    PcapPacket currentPacket;
     while (!Thread.interrupted()) {
-      if (!packets.isEmpty()) {
-        PcapPacket currentPacket = packets.removeFirst();
-        if (currentPacket.hasHeader(tcp)) {
-          ScanDetector(currentPacket);
+        if (!packets.isEmpty()){
+            currentPacket = packets.removeFirst();
+            ScanDetector(currentPacket);
         }
-      }
     }
     appendLog(txtArea, "Terminating Analzyer Thread.", Color.DARK_GRAY);
   }
@@ -90,6 +89,9 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
           packetPanes[7].setText(oSYNACK + "");
           packetPanes[8].setText(oRST + "");
           packetPanes[9].setText(oFIN + "");
+          packetPanes[10].setText(P1 + "");
+          packetPanes[11].setText(P2 + "");
+          packetPanes[12].setText(P3 + "");
           P1 = iSYNnACK - oSYNACK;
           P2 = oRST / (total - (iSYNnACK + oSYNnACK));
           P3 = iSYNnACK - ((iFIN > oFIN)? iFIN : oFIN);
