@@ -91,7 +91,7 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
     tbStatusBar.setFloatable(false);
     tbStatusBar.setRollover(true);
 
-    lblStatus.setForeground(new java.awt.Color(0, 150, 0));
+    lblStatus.setForeground(new java.awt.Color(50, 148, 44));
     lblStatus.setText("Ready");
     tbStatusBar.add(lblStatus);
     tbStatusBar.add(filler2);
@@ -263,8 +263,8 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
         .addContainerGap()
         .addComponent(tabpaneMain, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(spLog, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addComponent(spLog, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(tbStatusBar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addContainerGap())
     );
@@ -386,7 +386,6 @@ public class MainFrame extends javax.swing.JFrame implements LogInterface {
   private javax.swing.JComboBox cboxDevice;
   private javax.swing.Box.Filler filler1;
   private javax.swing.Box.Filler filler2;
-  private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JLabel lblDevice;
   private javax.swing.JLabel lblPacketNumber;
   private javax.swing.JLabel lblStatus;
