@@ -62,8 +62,7 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
     try {
       if (packet.hasHeader(tcp) && packet.hasHeader(ipv4)) {
         total++;
-//        IP = InetAddress.getLocalHost();
-        IP = InetAddress.getByName("149.152.125.184");
+        IP = InetAddress.getLocalHost();
         if (org.jnetpcap.packet.format.FormatUtils.ip(packet.getHeader(ipv4).source()).equals(IP.getHostAddress())) {
           // check outgoing details
           outgoing++;
