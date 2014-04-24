@@ -125,11 +125,11 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
 
       //Check For Anomalies
       //  SYN SCAN, 500 should be a ratio between a threshold and time the IDS has been active
-      if (P2 > Double.parseDouble(packetFields[13].getText()) && P3 > 500) {
+      if (P2 >= Double.parseDouble(packetFields[13].getText()) && P3 > 500) {
         packetFields[15].setText("Possible TCP SYN Scan in progress.");
       }
       //  FIN SCAN, -500 should be a ratio between a threshold and time the IDS has been active
-      if (P2 > Double.parseDouble(packetFields[13].getText()) && P3 < -500) {
+      if (P2 >= Double.parseDouble(packetFields[14].getText()) && P3 < -500) {
         packetFields[15].setText("Possible TCP FIN Scan in progress.");
       }
 
@@ -158,6 +158,7 @@ public class PacketHeaderAnalyzer implements Runnable, LogInterface {
     oSYNnACK = 0;
     outgoing = 0;
     total = 0;
+    packetFields[15].setText("");
   }
 
   @Override
